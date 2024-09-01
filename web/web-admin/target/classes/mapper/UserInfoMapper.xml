@@ -52,6 +52,6 @@
             pi.province_name
         from user_info ui
                  left join city_info ci on ui.city_id = ci._id
-                 leftjoin province_info pi on ui.province_id = pi._id
+                 left join province_info pi on ui.province_id = pi._id
     </select>
 </mapper>

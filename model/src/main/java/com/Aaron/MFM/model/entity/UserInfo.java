@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -19,8 +20,7 @@ import java.time.LocalDateTime;
  * @since 2024-08-30
  */
 @TableName("user_info")
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

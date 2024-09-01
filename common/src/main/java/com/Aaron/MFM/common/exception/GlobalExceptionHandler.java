@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MFMException.class)
     @ResponseBody
     public Result error(MFMException e){
-        e.printStackTrace();
+        System.out.println(e.getMessage());
         return Result.fail(e.getCode(),e.getMessage());
     }
 }

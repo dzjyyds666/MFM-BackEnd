@@ -49,6 +49,8 @@ public enum ResultCodeEnum {
     USER_NOT_PERMISSION(702,"用户无权限访问");
 
 
+
+
     private final Integer code;
 
     private final String message;
