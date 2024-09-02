@@ -27,4 +27,5 @@ public interface IUserInfoService extends IService<UserInfo> {
     UserInfoVo getUserInfo();
 
     List<UserInfoVo> getUserList();
+    void removeUser(Long id);
 }

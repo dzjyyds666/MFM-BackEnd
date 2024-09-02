@@ -32,4 +32,12 @@ public class Knife4jConfiguration {
                 .pathsToMatch("/admin/login/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi foodApi() {
+        return GroupedOpenApi.builder()
+                .group("后台食物管理")
+                .pathsToMatch("/admin/food/**")
+                .build();
+    }
 }

@@ -1,7 +1,10 @@
 package com.Aaron.MFM.web.admin.mapper;
 
 import com.Aaron.MFM.model.entity.FoodInfo;
+import com.Aaron.MFM.web.admin.vo.food.FoodInfoVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface FoodInfoMapper extends BaseMapper<FoodInfo> {
 
+    List<FoodInfoVo> getFoodList();
 }

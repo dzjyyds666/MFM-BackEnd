@@ -32,7 +32,7 @@
         from user_info ui
                  left join city_info ci on ui.city_id = ci._id
                  left join province_info pi on ui.province_id = pi._id
-        where ui._id = #{id};
+        where ui._id = #{id} and ui.is_delete = 0;
     </select>
 
     <select id="getUserList" resultMap="UserInfoVoMap">
@@ -53,5 +53,6 @@
         from user_info ui
                  left join city_info ci on ui.city_id = ci._id
                  left join province_info pi on ui.province_id = pi._id
+        where ui.is_delete = 0;
     </select>
 </mapper>

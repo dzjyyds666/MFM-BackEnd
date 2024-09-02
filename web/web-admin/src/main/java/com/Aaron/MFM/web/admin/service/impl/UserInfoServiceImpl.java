@@ -134,4 +134,23 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
             throw new MFMException(ResultCodeEnum.USER_NOT_PERMISSION);
         }
     }
+
+    @Override
+    public void removeUser(Long id) {
+        UserInfo loginUser = LoginHolder.getLoginUser();
+        // 只有超级管理员可以删除用户
+        if(loginUser.getRole().equals("超级管理员")){
+            // 判断用户是否为超级管理员
+            UserInfo userInfo = userInfoMapper.selectById(id);
+            if(userInfo.getRole().equals("超级管理员")){
+                throw new MFMException(201,"超级管理员不能删除");
+            }else{
+                userInfoMapper.deleteById(id);
+            }
+        }else {
+            throw new MFMException(ResultCodeEnum.USER_NOT_PERMISSION);
+        }
+    }
+
+
 }

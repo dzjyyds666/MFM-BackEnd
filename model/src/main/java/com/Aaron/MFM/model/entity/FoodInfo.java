@@ -61,7 +61,7 @@ public class FoodInfo implements Serializable {
     /**
      * 食物类型id
      */
-    private Integer foodTypeId;
+    private Integer TypeId;
 
     /**
      * 是否推荐
@@ -72,6 +72,11 @@ public class FoodInfo implements Serializable {
      * 状态
      */
     private Integer statusId;
+
+    /*
+    * 描述信息
+    * */
+    private String description;
 
     public Integer getId() {
         return id;
@@ -129,12 +134,12 @@ public class FoodInfo implements Serializable {
         this.price = price;
     }
 
-    public Integer getFoodTypeId() {
-        return foodTypeId;
+    public Integer getTypeId() {
+        return TypeId;
     }
 
-    public void setFoodTypeId(Integer foodTypeId) {
-        this.foodTypeId = foodTypeId;
+    public void setTypeId(Integer foodTypeId) {
+        this.TypeId = foodTypeId;
     }
 
     public Byte getIsRecommend() {
@@ -153,6 +158,13 @@ public class FoodInfo implements Serializable {
         this.statusId = statusId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     @Override
     public String toString() {
         return "FoodInfo{" +
@@ -163,9 +175,10 @@ public class FoodInfo implements Serializable {
             ", updateTime = " + updateTime +
             ", isDelete = " + isDelete +
             ", price = " + price +
-            ", foodTypeId = " + foodTypeId +
+            ", TypeId = " + TypeId +
             ", isRecommend = " + isRecommend +
             ", statusId = " + statusId +
+            ", description = " + description +
         "}";
     }
 }
