@@ -1,7 +1,7 @@
 package com.Aaron.MFM.web.app.service.impl;
 
+
 import com.Aaron.MFM.model.entity.FoodLabel;
-import com.Aaron.MFM.web.app.mapper.FoodLabelMapper;
 import com.Aaron.MFM.web.admin.service.IFoodLabelService;
 import com.Aaron.MFM.web.app.mapper.FoodLabelMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -3,6 +3,8 @@ package com.Aaron.MFM.web.admin.service;
 import com.Aaron.MFM.model.entity.CityInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 城市表 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICityInfoService extends IService<CityInfo> {
 
+    List<CityInfo> getCityList(Integer provinceId);
 }

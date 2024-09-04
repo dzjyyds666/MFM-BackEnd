@@ -25,31 +25,24 @@ import java.util.List;
  * @since 2024-08-30
  */
 @RestController
-@Tag(name = "后台食物管理")
+@Tag(name = "后台菜品标签管理")
 @RequestMapping("admin/food")
 public class FoodLabelController {
 
     @Autowired
     private IFoodLabelService foodLabelService;
 
-    @Operation(summary = "获取食物标签列表")
+    @Operation(summary = "获取菜品标签列表")
     @GetMapping("/getFoodLabelList")
     public Result<List<FoodLabel>> getFoodLabelList(){
         List<FoodLabel> list = foodLabelService.list();
         return Result.ok(list);
     }
 
-    @Operation(summary = "添加或修改食物标签")
+    @Operation(summary = "添加或修改菜品标签")
     @PostMapping("/addOrUpdateFoodLabel")
     public Result<String> addOrUpdateFoodLabel(@RequestBody FoodLabel foodLabel){
 
-        // 判断是否为管理员和超级管理员
-        if(foodLabel.getId() == null){
-            UserInfo loginUser = LoginHolder.getLoginUser();
-            if(!loginUser.getRole().equals("超级管理员") && !loginUser.getRole().equals("管理员")){
-                throw new MFMException(ResultCodeEnum.USER_NOT_PERMISSION);
-            }
-        }
         if(StringUtils.hasText(foodLabel.getLabelName()) == false){
             throw  new MFMException(201,"标签名不能为空");
         }
@@ -57,13 +50,9 @@ public class FoodLabelController {
         return Result.ok("操作成功");
     }
 
-    @Operation(summary = "删除食物标签")
+    @Operation(summary = "删除菜品标签")
     @DeleteMapping("/deleteFoodLabel")
     public Result<String> deleteFoodLabel(@RequestParam Long id){
-        UserInfo loginUser = LoginHolder.getLoginUser();
-        if(!loginUser.getRole().equals("超级管理员") && !loginUser.getRole().equals("管理员")){
-            throw new MFMException(ResultCodeEnum.USER_NOT_PERMISSION);
-        }
         foodLabelService.removeById(id);
         return Result.ok("操作成功");
     }

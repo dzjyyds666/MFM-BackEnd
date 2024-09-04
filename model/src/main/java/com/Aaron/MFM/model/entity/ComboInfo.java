@@ -63,10 +63,8 @@ public class ComboInfo implements Serializable {
      */
     private Byte isTakeoff;
 
-    /**
-     * 是否删除
-     */
-    private Byte isdelete;
+
+
 
     public Integer getId() {
         return id;
@@ -132,13 +130,6 @@ public class ComboInfo implements Serializable {
         this.isTakeoff = isTakeoff;
     }
 
-    public Byte getIsdelete() {
-        return isdelete;
-    }
-
-    public void setIsdelete(Byte isdelete) {
-        this.isdelete = isdelete;
-    }
 
     @Override
     public String toString() {
@@ -151,7 +142,6 @@ public class ComboInfo implements Serializable {
             ", price = " + price +
             ", isRecommend = " + isRecommend +
             ", isTakeoff = " + isTakeoff +
-            ", isdelete = " + isdelete +
         "}";
     }
 }

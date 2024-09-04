@@ -36,8 +36,40 @@ public class Knife4jConfiguration {
     @Bean
     public GroupedOpenApi foodApi() {
         return GroupedOpenApi.builder()
-                .group("后台食物管理")
+                .group("后台菜品管理")
                 .pathsToMatch("/admin/food/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi orderApi() {
+        return GroupedOpenApi.builder()
+                .group("后台订单管理")
+                .pathsToMatch("/admin/order/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi commentApi() {
+        return GroupedOpenApi.builder()
+                .group("后台评论管理")
+                .pathsToMatch("/admin/comment/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi comboApi() {
+        return GroupedOpenApi.builder()
+                .group("后台套餐管理")
+                .pathsToMatch("/admin/combo/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi salesPromotionApi() {
+        return GroupedOpenApi.builder()
+                .group("后台促销管理")
+                .pathsToMatch("/admin/salesPromotion/**")
                 .build();
     }
 }

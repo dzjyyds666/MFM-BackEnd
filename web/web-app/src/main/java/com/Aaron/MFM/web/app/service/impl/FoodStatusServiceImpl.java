@@ -1,8 +1,9 @@
 package com.Aaron.MFM.web.app.service.impl;
 
+
 import com.Aaron.MFM.model.entity.FoodStatus;
-import com.Aaron.MFM.web.app.mapper.FoodStatusMapper;
 import com.Aaron.MFM.web.admin.service.IFoodStatusService;
+import com.Aaron.MFM.web.app.mapper.FoodStatusMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FoodStatusServiceImpl extends ServiceImpl<FoodStatusMapper, FoodStatus> implements IFoodStatusService {
+
 
 }

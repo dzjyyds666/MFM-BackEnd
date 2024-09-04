@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
  * @author Aaron
  * @since 2024-08-30
  */
+@Data
 @TableName("food_info")
 public class FoodInfo implements Serializable {
 
@@ -58,10 +61,7 @@ public class FoodInfo implements Serializable {
      */
     private BigDecimal price;
 
-    /**
-     * 食物类型id
-     */
-    private Integer TypeId;
+
 
     /**
      * 是否推荐
@@ -77,6 +77,11 @@ public class FoodInfo implements Serializable {
     * 描述信息
     * */
     private String description;
+
+    /*
+    * 菜品key
+    * */
+    private String foodKey;
 
     public Integer getId() {
         return id;
@@ -134,13 +139,6 @@ public class FoodInfo implements Serializable {
         this.price = price;
     }
 
-    public Integer getTypeId() {
-        return TypeId;
-    }
-
-    public void setTypeId(Integer foodTypeId) {
-        this.TypeId = foodTypeId;
-    }
 
     public Byte getIsRecommend() {
         return isRecommend;
@@ -165,6 +163,15 @@ public class FoodInfo implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getFoodKey() {
+        return foodKey;
+    }
+
+    public void setFoodKey(String foodKey) {
+        this.foodKey = foodKey;
+    }
+
     @Override
     public String toString() {
         return "FoodInfo{" +
@@ -175,10 +182,10 @@ public class FoodInfo implements Serializable {
             ", updateTime = " + updateTime +
             ", isDelete = " + isDelete +
             ", price = " + price +
-            ", TypeId = " + TypeId +
             ", isRecommend = " + isRecommend +
             ", statusId = " + statusId +
             ", description = " + description +
+            ", Key = " + foodKey +
         "}";
     }
 }

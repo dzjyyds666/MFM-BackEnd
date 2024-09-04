@@ -16,5 +16,7 @@ import java.util.List;
  */
 public interface FoodInfoMapper extends BaseMapper<FoodInfo> {
 
+    FoodInfoVo getFoodListById(Integer foodId);
+
     List<FoodInfoVo> getFoodList();
 }

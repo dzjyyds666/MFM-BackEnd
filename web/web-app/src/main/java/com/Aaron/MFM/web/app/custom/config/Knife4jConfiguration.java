@@ -5,6 +5,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 public class Knife4jConfiguration {
 
@@ -12,24 +13,16 @@ public class Knife4jConfiguration {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new io.swagger.v3.oas.models.info.Info()
-                        .title("MFM后台管理")
+                        .title("MFMapp系统")
                         .version("1.0")
-                        .description("MFM后台管理"));
+                        .description("MFMapp系统"));
     }
 
     @Bean
-    public GroupedOpenApi adminUserApi() {
+    public GroupedOpenApi LoginApi() {
         return GroupedOpenApi.builder()
-                .group("后台用户管理")
-                .pathsToMatch("/admin/user/**")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi loginApi() {
-        return GroupedOpenApi.builder()
-                .group("登录用户管理")
-                .pathsToMatch("/admin/login/**")
+                .group("app登录系统")
+                .pathsToMatch("/app/login/**")
                 .build();
     }
 }

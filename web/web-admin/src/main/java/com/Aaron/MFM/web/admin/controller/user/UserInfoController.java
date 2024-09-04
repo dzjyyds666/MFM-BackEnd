@@ -83,11 +83,6 @@ public class UserInfoController {
     @Operation(summary = "修改用户角色")
     @PostMapping("/upRole")
     public Result<String> changeRole(@RequestBody changeUserRoleVo changeUserRoleVo){
-        UserInfo loginUser = LoginHolder.getLoginUser();
-        System.out.println(loginUser.getRole());
-        if(!loginUser.getRole().equals("超级管理员")){
-            throw new MFMException(ResultCodeEnum.USER_NOT_PERMISSION);
-        }
         UserInfo userInfo = new UserInfo();
         userInfo.setRole(changeUserRoleVo.getRole());
         userInfo.setId(changeUserRoleVo.getId());

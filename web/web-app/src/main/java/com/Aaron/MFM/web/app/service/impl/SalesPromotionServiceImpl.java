@@ -1,8 +1,9 @@
 package com.Aaron.MFM.web.app.service.impl;
 
+
 import com.Aaron.MFM.model.entity.SalesPromotion;
-import com.Aaron.MFM.web.app.mapper.SalesPromotionMapper;
 import com.Aaron.MFM.web.admin.service.ISalesPromotionService;
+import com.Aaron.MFM.web.app.mapper.SalesPromotionMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper, SalesPromotion> implements ISalesPromotionService {
+
 
 }

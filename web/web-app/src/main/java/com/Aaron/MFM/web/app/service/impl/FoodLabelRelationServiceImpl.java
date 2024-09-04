@@ -1,8 +1,8 @@
 package com.Aaron.MFM.web.app.service.impl;
 
 import com.Aaron.MFM.model.entity.FoodLabelRelation;
-import com.Aaron.MFM.web.app.mapper.FoodLabelRelationMapper;
 import com.Aaron.MFM.web.admin.service.IFoodLabelRelationService;
+import com.Aaron.MFM.web.app.mapper.FoodLabelRelationMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

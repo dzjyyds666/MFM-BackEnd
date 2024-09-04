@@ -3,6 +3,8 @@ package com.Aaron.MFM.web.admin.service;
 import com.Aaron.MFM.model.entity.SalesPromotion;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 促销表 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISalesPromotionService extends IService<SalesPromotion> {
 
+    List<SalesPromotion> getSalesPromotionList();
 }

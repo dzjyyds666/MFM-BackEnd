@@ -1,6 +1,8 @@
 package com.Aaron.MFM.web.admin.service;
 
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.app.vo.login.CaptchaVo;
+import com.Aaron.MFM.web.app.vo.login.LoginInfoVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserInfoService extends IService<UserInfo> {
 
+     CaptchaVo getCaptcha();
+
+     String login(LoginInfoVo loginInfoVo);
+
+     void logout();
+
+     void register(UserInfo userinfo);
 }

@@ -3,16 +3,16 @@ package com.Aaron.MFM.web.admin.service.impl;
 import com.Aaron.MFM.common.Login.LoginHolder;
 import com.Aaron.MFM.common.exception.MFMException;
 import com.Aaron.MFM.common.result.ResultCodeEnum;
-import com.Aaron.MFM.model.entity.FoodInfo;
-import com.Aaron.MFM.model.entity.FoodLabelRelation;
-import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.model.entity.*;
 import com.Aaron.MFM.web.admin.mapper.FoodInfoMapper;
 import com.Aaron.MFM.web.admin.mapper.FoodLabelRelationMapper;
 import com.Aaron.MFM.web.admin.service.IFoodInfoService;
+import com.Aaron.MFM.web.admin.vo.food.AddFoodInfoVo;
 import com.Aaron.MFM.web.admin.vo.food.ChangeFoodInfoVo;
 import com.Aaron.MFM.web.admin.vo.food.FoodInfoVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -76,14 +76,32 @@ public class FoodInfoServiceImpl extends ServiceImpl<FoodInfoMapper, FoodInfo> i
     }
 
     @Override
-    public void addFoodInfo(FoodInfoVo foodInfoVo) {
-        UserInfo loginUser = LoginHolder.getLoginUser();
-        if( !loginUser.getRole().equals("超级管理员") && !loginUser.getRole().equals("管理员")){
-            throw new MFMException(ResultCodeEnum.USER_NOT_PERMISSION);
-        }
+    public void addFoodInfo(AddFoodInfoVo foodInfoVo) {
+        FoodInfo foodInfo = new FoodInfo();
 
-        if(StringUtils.hasText(foodInfoVo.getFoodName())){
+        // 插入菜品基础信息
+        foodInfo.setFoodName(foodInfoVo.getFoodName());
+        foodInfo.setPrice(foodInfoVo.getPrice());
+        foodInfo.setDescription(foodInfoVo.getDescription());
+        foodInfo.setPicUrl(foodInfoVo.getPicUrl());
+        foodInfo.setStatusId(foodInfoVo.getStatusId());
+        foodInfo.setFoodKey(foodInfoVo.getFoodKey());
 
+        foodInfoMapper.insert(foodInfo);
+
+        Integer id = foodInfo.getId();
+
+        // 插入标签和菜品关系
+        for (Integer i : foodInfoVo.getLabelIdList()) {
+            FoodLabelRelation foodLabelRelation = new FoodLabelRelation();
+            foodLabelRelation.setFoodId(id);
+            foodLabelRelation.setLabelId(i);
+            foodLabelRelationMapper.insert(foodLabelRelation);
         }
+    }
+
+    @Override
+    public void removeFoodInfo(Long id) {
+        foodInfoMapper.deleteById(id);
     }
 }

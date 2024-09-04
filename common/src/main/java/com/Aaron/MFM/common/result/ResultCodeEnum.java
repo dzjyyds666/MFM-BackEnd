@@ -33,6 +33,8 @@ public enum ResultCodeEnum {
 
     APP_LOGIN_AUTH(501, "未登陆"),
     APP_LOGIN_PHONE_EMPTY(502, "手机号码为空"),
+    APP_LOGIN_PASSWORD_EMPTY(508, "密码为空"),
+    APP_LOGIN_PASSWORD_ERROR(509, "密码错误"),
     APP_LOGIN_CODE_EMPTY(503, "验证码为空"),
     APP_SEND_SMS_TOO_OFTEN(504, "验证法发送过于频繁"),
     APP_LOGIN_CODE_EXPIRED(505, "验证码已过期"),
@@ -46,7 +48,8 @@ public enum ResultCodeEnum {
 
 
     USER_STATUS_ERROR(701,"用户状态异常,请联系管理员解决"),
-    USER_NOT_PERMISSION(702,"用户无权限访问");
+    USER_NOT_PERMISSION(702,"用户无权限访问"),
+    USER_LOGIN_EXPIRED(703,"用户登录已过期,请重新登录");
 
 
 
