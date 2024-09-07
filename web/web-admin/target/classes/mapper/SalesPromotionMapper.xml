@@ -19,6 +19,7 @@
                sp.begin_time,
                sp.end_time,
                sp.food_id,
+               sp.is_shelves,
                fi._id as food_id,
                fi.food_name,
                fi.pic_url
