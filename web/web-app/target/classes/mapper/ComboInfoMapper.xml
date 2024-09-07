@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.MFM.web.app.mapper.ComboInfoMapper">
 
+    <resultMap id="ComboInfoVoMap" type="com.Aaron.MFM.web.app.vo.combo.ComboInfoVo" autoMapping="true">
+        <id property="id" column="_id"/>
+        <association property="foodList" javaType="com.Aaron.MFM.model.entity.FoodInfo">
+            <id property="id" column="food_id"/>
+            <result property="foodName" column="food_name"/>
+            <result property="picUrl" column="pic_url"/>
+            <result property="isRecommend" column="is_recommend"/>
+        </association>
+    </resultMap>
+
+    <select id="getComboList" resultMap="ComboInfoVoMap">
+        select
+            ci._id,
+            ci.combo_name,
+            ci.create_time,
+            ci.is_delete,
+            ci.price,
+            ci.is_recommend,
+            fi._id as food_id,
+            fi.food_name,
+            fi.pic_url,
+            fi.is_recommend
+        from combo_info ci
+                 left join combo_food_relation cfr on ci._id = cfr.combo_id and cfr.is_delete = 0
+                 left join food_info fi on cfr.food_id = fi._id and fi.is_delete = 0
+        where ci.is_delete = 0 and ci.is_takeoff = 0
+        order by ci.create_time desc
+    </select>
 </mapper>

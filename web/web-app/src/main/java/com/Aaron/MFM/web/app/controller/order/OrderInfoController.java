@@ -1,7 +1,20 @@
 package com.Aaron.MFM.web.app.controller.order;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.Aaron.MFM.common.Login.LoginHolder;
+import com.Aaron.MFM.common.result.Result;
+
+import com.Aaron.MFM.model.entity.OrderInfo;
+import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.app.service.IOrderStatusService;
+import com.Aaron.MFM.web.app.vo.order.OrderInfoVo;
+import com.Aaron.MFM.web.app.vo.order.OrderStatusVo;
+import com.Aaron.MFM.web.app.vo.order.OrderVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,8 +24,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Aaron
  * @since 2024-08-30
  */
-@Controller
-@RequestMapping("/orderInfo")
+@RestController
+@RequestMapping("/app/order")
+@Tag(name = "app订单管理")
 public class OrderInfoController {
+
+    @Autowired
+    private IOrderStatusService orderStatusService;
+
+    @PostMapping("/createOrder")
+    @Operation(summary = "创建订单")
+    public Result<String> createOrder(@RequestBody OrderVo orderInfo) {
+        orderStatusService.addOrder(orderInfo);
+        return Result.ok("添加成功");
+    }
+
+    @PostMapping("/updateOrder")
+    @Operation(summary = "更新订单")
+    public Result<String> updateOrder(@RequestBody OrderStatusVo orderStatusVo) {
+        orderStatusService.updateOrder(orderStatusVo);
+        return Result.ok("更新成功");
+    }
+
+    @GetMapping("/GetOrderById")
+    @Operation(summary = "根据订单id获取订单信息")
+    public Result<List<OrderInfoVo>> getOrderById(@RequestParam(required = false) Integer id){
+        UserInfo loginUser = LoginHolder.getLoginUser();
+        return Result.ok(orderStatusService.getOrderById(loginUser.getId(),id));
+    }
 
 }

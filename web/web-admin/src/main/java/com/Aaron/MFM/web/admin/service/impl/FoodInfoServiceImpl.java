@@ -11,6 +11,7 @@ import com.Aaron.MFM.web.admin.vo.food.AddFoodInfoVo;
 import com.Aaron.MFM.web.admin.vo.food.ChangeFoodInfoVo;
 import com.Aaron.MFM.web.admin.vo.food.FoodInfoVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,5 +104,13 @@ public class FoodInfoServiceImpl extends ServiceImpl<FoodInfoMapper, FoodInfo> i
     @Override
     public void removeFoodInfo(Long id) {
         foodInfoMapper.deleteById(id);
+    }
+
+    @Override
+    public void changeStatus(Integer id, Integer statusId) {
+        LambdaUpdateWrapper<FoodInfo> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(FoodInfo::getId, id);
+        updateWrapper.set(FoodInfo::getStatusId, statusId);
+        foodInfoMapper.update(null, updateWrapper);
     }
 }

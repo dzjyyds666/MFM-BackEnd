@@ -1,7 +1,10 @@
-package com.Aaron.MFM.web.admin.service;
+package com.Aaron.MFM.web.app.service;
 
 import com.Aaron.MFM.model.entity.SalesPromotion;
+import com.Aaron.MFM.web.app.vo.order.SalesPromotionVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISalesPromotionService extends IService<SalesPromotion> {
 
+    List<SalesPromotionVo> getSalePromotionList();
+
+    void snapped(Integer id);
 }

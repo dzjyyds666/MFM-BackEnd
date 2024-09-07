@@ -1,8 +1,10 @@
 package com.Aaron.MFM.web.admin.service.impl;
 
+import com.Aaron.MFM.common.rabbitmq.RabbitConfig;
 import com.Aaron.MFM.model.entity.OrderFoodRelation;
 import com.Aaron.MFM.model.entity.OrderInfo;
 import com.Aaron.MFM.model.entity.OrderStatus;
+import com.Aaron.MFM.model.enums.OrderStatusEnum;
 import com.Aaron.MFM.web.admin.mapper.FoodInfoMapper;
 import com.Aaron.MFM.web.admin.mapper.OrderFoodRelationMapper;
 import com.Aaron.MFM.web.admin.mapper.OrderInfoMapper;
@@ -13,11 +15,10 @@ import com.Aaron.MFM.web.admin.vo.order.OrderInfoVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.checkerframework.checker.units.qual.A;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,5 +138,21 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         }
 
         return list;
+    }
+
+
+    @RabbitListener(queues = RabbitConfig.DELAYED_QUEUE_NAME)
+    public void orderExpire(String orderNumber) {
+        LambdaQueryWrapper<OrderInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(OrderInfo::getOrderNumber, orderNumber);
+        OrderInfo orderInfo = orderInfoMapper.selectOne(queryWrapper);
+
+        if(orderInfo.getStausId() == OrderStatusEnum.PALCE_ORDER.getValue()){
+            LambdaUpdateWrapper<OrderInfo> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.eq(OrderInfo::getOrderNumber, orderNumber);
+            updateWrapper.set(OrderInfo::getStausId, OrderStatusEnum.CANCELDEL.getValue());
+            orderInfoMapper.update(null, updateWrapper);
+        }
+
     }
 }

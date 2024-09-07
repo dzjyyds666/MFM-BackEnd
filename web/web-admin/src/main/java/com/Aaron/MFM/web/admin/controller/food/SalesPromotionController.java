@@ -34,6 +34,15 @@ public class SalesPromotionController {
         return  Result.ok();
     }
 
+    @GetMapping("/Shelves")
+    @Operation(summary = "上架或下架促销")
+    public Result<String> shelvesSalesPromotion( @RequestParam Integer id,@RequestParam Integer isShelves){
+        salesPromotionService.upShelves(id,isShelves);
+        if(isShelves == 1){
+            return Result.ok("上架成功");
+        }else return Result.ok("下架成功");
+    }
+
     @DeleteMapping("/delete")
     @Operation(summary = "删除促销")
     public Result<String> deleteSalesPromotion(@RequestParam Integer id){
@@ -44,7 +53,8 @@ public class SalesPromotionController {
     @GetMapping("/getSalesPromotionList")
     @Operation(summary = "获取促销列表")
     public Result<List<SalesPromotion>> getSalesPromotionList(){
-        return Result.ok(salesPromotionService.getSalesPromotionList());
+        List<SalesPromotion> list = salesPromotionService.getSalesPromotionList();
+        return Result.ok(list);
     }
 
 }

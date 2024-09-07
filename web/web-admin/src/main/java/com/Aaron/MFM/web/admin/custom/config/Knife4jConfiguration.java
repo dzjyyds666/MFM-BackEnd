@@ -72,4 +72,12 @@ public class Knife4jConfiguration {
                 .pathsToMatch("/admin/salesPromotion/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi fileApi() {
+        return GroupedOpenApi.builder()
+                .group("后台文件管理")
+                .pathsToMatch("/admin/file/**")
+                .build();
+    }
 }

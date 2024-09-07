@@ -16,4 +16,6 @@ import java.util.List;
 public interface ISalesPromotionService extends IService<SalesPromotion> {
 
     List<SalesPromotion> getSalesPromotionList();
+
+    void upShelves(Integer id,Integer isShelves);
 }

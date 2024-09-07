@@ -1,7 +1,10 @@
-package com.Aaron.MFM.web.admin.service;
+package com.Aaron.MFM.web.app.service;
 
 import com.Aaron.MFM.model.entity.ComboInfo;
+import com.Aaron.MFM.web.app.vo.combo.ComboInfoVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IComboInfoService extends IService<ComboInfo> {
 
+    List<ComboInfoVo> getComboList();
 }

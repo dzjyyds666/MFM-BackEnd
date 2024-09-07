@@ -1,7 +1,10 @@
-package com.Aaron.MFM.web.admin.service;
+package com.Aaron.MFM.web.app.service;
 
 import com.Aaron.MFM.model.entity.FoodInfo;
+import com.Aaron.MFM.web.app.vo.food.FoodInfoVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFoodInfoService extends IService<FoodInfo> {
 
+    List<FoodInfoVo> getFoodInfoByKey(String foodKey);
+
+    FoodInfoVo getFoodInfoById(String foodId);
 }

@@ -1,7 +1,10 @@
 package com.Aaron.MFM.web.app.mapper;
 
 import com.Aaron.MFM.model.entity.CommentInfo;
+import com.Aaron.MFM.web.app.vo.comment.CommentVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CommentInfoMapper extends BaseMapper<CommentInfo> {
 
+    List<CommentVo> getCommentByFoodId(Integer foodId,Long userId);
 }

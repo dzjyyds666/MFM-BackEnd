@@ -25,4 +25,6 @@ public interface IFoodInfoService extends IService<FoodInfo> {
     void addFoodInfo(AddFoodInfoVo foodInfoVo);
 
     void removeFoodInfo(Long id);
+
+    void changeStatus(Integer id, Integer statusId);
 }

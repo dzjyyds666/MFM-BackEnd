@@ -49,11 +49,18 @@ public class FoodInfoController {
         return Result.ok();
     }
 
-    @DeleteMapping("deleteFoodInfo")
+    @DeleteMapping("/deleteFoodInfo")
     @Operation(summary = "删除菜品信息")
     public Result<String> deleteFoodInfo(@RequestParam Long id){
         foodInfoService.removeFoodInfo(id);
         return Result.ok("删除成功");
+    }
+
+    @GetMapping("/changeStatus")
+    @Operation(summary = "修改菜品状态")
+    public Result<String> changeStatus(@RequestParam Integer id,@RequestParam Integer statusId){
+        foodInfoService.changeStatus(id,statusId);
+        return Result.ok("修改成功");
     }
 
 }

@@ -2,4 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.MFM.web.app.mapper.FoodInfoMapper">
 
+    <resultMap id="FoodInfoVo" type="com.Aaron.MFM.web.app.vo.food.FoodInfoVo" autoMapping="true">
+        <id property="id" column="_id"/>
+        <association property="foodStatus" javaType="com.Aaron.MFM.model.entity.FoodStatus">
+            <id property="id" column="status_id"/>
+            <result property="statusName" column="status_name"/>
+        </association>
+        <collection property="foodLabelList" ofType="com.Aaron.MFM.model.entity.FoodLabel">
+            <id property="id" column="label_id"/>
+            <result property="labelName" column="label_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="getFoodInfoByKey" resultMap="FoodInfoVo">
+        select fi._id,
+               fi.food_key,
+               fi.food_name,
+               fi.is_recommend,
+               fi.pic_url,
+               fi.price,
+               fi.status_id,
+               fi.description,
+               fs._id status_id,
+               fs.status_name,
+               fl._id label_id,
+               fl.label_name
+        from food_info fi
+            left join food_label_relation flr on fi._id = flr.food_id and flr.is_delete = 0
+            left join food_label fl on flr.label_id = fl._id and fl.is_delete = 0
+            left join food_status fs on fi.status_id = fs._id and fs.is_delete = 0
+        <where>
+            fi.is_delete = 0
+            <if test="foodKey != null" >
+                and fi.food_key like concat('%',#{foodKey},  '%')
+            </if>
+        </where>
+    </select>
+    <select id="getFoodInfoById" resultMap="FoodInfoVo">
+        select fi._id,
+               fi.food_key,
+               fi.food_name,
+               fi.is_recommend,
+               fi.pic_url,
+               fi.price,
+               fi.status_id,
+               fi.description,
+               fs._id status_id,
+               fs.status_name,
+               fl._id label_id,
+               fl.label_name
+        from food_info fi
+                 left join food_label_relation flr on fi._id = flr.food_id and flr.is_delete = 0
+                 left join food_label fl on flr.label_id = fl._id and fl.is_delete = 0
+                 left join food_status fs on fi.status_id = fs._id and fs.is_delete = 0
+        where fi._id = #{foodId}
+          and fi.is_delete = 0
+    </select>
 </mapper>

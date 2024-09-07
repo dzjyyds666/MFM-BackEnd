@@ -11,10 +11,13 @@ import com.Aaron.MFM.web.admin.service.IUserInfoService;
 import com.Aaron.MFM.web.app.mapper.UserInfoMapper;
 import com.Aaron.MFM.web.app.vo.login.CaptchaVo;
 import com.Aaron.MFM.web.app.vo.login.LoginInfoVo;
+import com.Aaron.MFM.web.app.vo.user.UserInfoVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -86,7 +89,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if(StringUtils.hasText(loginInfoVo.getPassword()) == false){
             throw new MFMException(ResultCodeEnum.APP_LOGIN_PASSWORD_EMPTY);
         }
-        if(!userInfo.getPassword().equals(loginInfoVo.getPassword())){
+        if(!userInfo.getPassword().equals(DigestUtils.md5Hex(loginInfoVo.getPassword()))){
             throw new MFMException(ResultCodeEnum.APP_LOGIN_PASSWORD_ERROR);
         }
         String token = JWTutils.createToken(userInfo.getId(),userInfo.getRole());
@@ -119,7 +122,21 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if(userinfo.getCityId() == null || userinfo.getProvinceId() == null){
             throw new MFMException(201,"未选择地址信息");
         }
+        userinfo.setPassword(DigestUtils.md5Hex(userinfo.getPassword()));
         userinfo.setRole("用户");
         userInfoMapper.insert(userinfo);
+    }
+
+    @Override
+    public UserInfoVo getUserInfo() {
+
+        return userInfoMapper.getUserInfo(LoginHolder.getLoginUser().getId());
+    }
+
+    @Override
+    public void updateInfo(UserInfo userinfo) {
+        LambdaUpdateWrapper<UserInfo> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(UserInfo::getId,userinfo.getId());
+        userInfoMapper.update(userinfo,updateWrapper);
     }
 }

@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.MFM.web.app.mapper.UserInfoMapper">
 
+    <resultMap id="UserInfoVo" type="com.Aaron.MFM.web.app.vo.user.UserInfoVo" autoMapping="true">
+        <id property="id" column="_id"/>
+        <association property="provinceInfo" javaType="com.Aaron.MFM.model.entity.ProvinceInfo">
+            <id property="id" column="province_id"/>
+            <result property="provinceName" column="province_name"/>
+        </association>
+        <association property="cityInfo" javaType="com.Aaron.MFM.model.entity.CityInfo">
+            <id property="id" column="city_id"/>
+            <result property="cityName" column="city_name"/>
+        </association>
+    </resultMap>
+
+    <select id="getUserInfo" resultMap="UserInfoVo">
+        select ui._id,
+               ui.avatar_url,
+               ui.city_id,
+               ci.city_name,
+               ui.nickname,
+               ui.password,
+               ui.phone,
+               ui.province_id,
+               pi.province_name
+        from user_info ui
+                 left join province_info pi on ui.province_id = pi._id
+                 left join city_info ci on ui.city_id = ci._id
+        where ui._id = 11
+          and ui.is_delete = 0
+    </select>
 </mapper>

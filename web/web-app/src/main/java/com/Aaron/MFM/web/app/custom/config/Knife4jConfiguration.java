@@ -25,4 +25,60 @@ public class Knife4jConfiguration {
                 .pathsToMatch("/app/login/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi UserApi() {
+        return GroupedOpenApi.builder()
+                .group("app用户系统")
+                .pathsToMatch("/app/user/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi FoodApi() {
+        return GroupedOpenApi.builder()
+                .group("app食物系统")
+                .pathsToMatch("/app/food/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi CommentApi() {
+        return GroupedOpenApi.builder()
+                .group("app评论系统")
+                .pathsToMatch("/app/comment/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi OrderApi() {
+        return GroupedOpenApi.builder()
+                .group("app订单系统")
+                .pathsToMatch("/app/order/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi AdminApi() {
+        return GroupedOpenApi.builder()
+                .group("app促销系统")
+                .pathsToMatch("/app/salePromotion/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi FileApi() {
+        return GroupedOpenApi.builder()
+                .group("app文件系统")
+                .pathsToMatch("/app/file/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi ChatApi() {
+        return GroupedOpenApi.builder()
+                .group("app聊天系统")
+                .pathsToMatch("/app/chat/**")
+                .build();
+    }
 }

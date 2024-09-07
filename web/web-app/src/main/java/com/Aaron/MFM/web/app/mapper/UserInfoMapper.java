@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.app.mapper;
 
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.app.vo.user.UserInfoVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
+    UserInfoVo getUserInfo(Long id);
 }

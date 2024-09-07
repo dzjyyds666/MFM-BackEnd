@@ -12,6 +12,7 @@ public class ChangeFoodInfoVo {
     private String foodName;
     private String description;
     private String picUrl;
+    private Integer statusId;
     private BigDecimal price;
     private List<Integer> foodLabelList;
 }

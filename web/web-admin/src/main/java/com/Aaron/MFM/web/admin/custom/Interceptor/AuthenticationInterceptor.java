@@ -34,7 +34,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         Claims claims = JWTutils.parseToken(token);
         // 去redis中校验token是否存在
         String redisToken = redisTemplate.opsForValue().get(RedisConstant.ADMIN_LOGIN_PREFIX + claims.get("userId"));
-        if(redisToken == null || redisToken.equals(token)){
+        if(redisToken == null || !redisToken.equals(token)){
             throw new MFMException(ResultCodeEnum.TOKEN_EXPIRED);
         }
 

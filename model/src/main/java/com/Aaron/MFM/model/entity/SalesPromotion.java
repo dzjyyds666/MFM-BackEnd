@@ -17,9 +17,8 @@ import java.time.LocalDateTime;
  * @since 2024-08-30
  */
 @TableName("sales_promotion")
-public class SalesPromotion implements Serializable {
+public class SalesPromotion {
 
-    private static final long serialVersionUID = 1L;
 
     /**
      * 促销id
@@ -62,6 +61,8 @@ public class SalesPromotion implements Serializable {
      * 价格
      */
     private BigDecimal price;
+
+    private Integer isShelves;
 
     public Integer getId() {
         return id;
@@ -127,6 +128,13 @@ public class SalesPromotion implements Serializable {
         this.price = price;
     }
 
+    public Integer getIsShelves() {
+        return isShelves;
+    }
+
+    public void setIsShelves(Integer isShelves) {
+        this.isShelves = isShelves;
+    }
     @Override
     public String toString() {
         return "SalesPromotion{" +
@@ -138,6 +146,7 @@ public class SalesPromotion implements Serializable {
             ", foodId = " + foodId +
             ", number = " + number +
             ", price = " + price +
+            ", isShelves = " + isShelves +
         "}";
     }
 }

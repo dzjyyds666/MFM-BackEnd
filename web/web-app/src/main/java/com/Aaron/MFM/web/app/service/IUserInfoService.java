@@ -3,6 +3,7 @@ package com.Aaron.MFM.web.admin.service;
 import com.Aaron.MFM.model.entity.UserInfo;
 import com.Aaron.MFM.web.app.vo.login.CaptchaVo;
 import com.Aaron.MFM.web.app.vo.login.LoginInfoVo;
+import com.Aaron.MFM.web.app.vo.user.UserInfoVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -22,4 +23,8 @@ public interface IUserInfoService extends IService<UserInfo> {
      void logout();
 
      void register(UserInfo userinfo);
+
+    UserInfoVo getUserInfo();
+
+    void updateInfo(UserInfo userinfo);
 }
