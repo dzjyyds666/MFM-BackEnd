@@ -14,10 +14,26 @@
             <result property="picUrl" column="pic_url"/>
             <result property="isRecommend" column="is_recommend"/>
         </collection>
+        <collection property="orderFoodRelationList" ofType="com.Aaron.MFM.model.entity.OrderFoodRelation">
+            <id property="id" column="relation_id"/>
+            <result property="foodId" column="food_id"/>
+            <result property="number" column="number"/>
+        </collection>
     </resultMap>
 
     <select id="getOrderById" resultMap="OrderInfoVoMap">
-        select *
+        select oi._id,
+               oi.order_number,
+               oi.staus_id,
+               oi.total,
+               ofr.food_id,
+               ofr.number,
+               ofr._id as relation_id,
+               fi._id as food_id,
+               fi.food_name,
+               fi.pic_url,
+               fi.is_recommend,
+               os.status_name
         from order_info oi
                  left join order_food_relation ofr on oi._id = ofr.order_id and ofr.is_delete = 0
                  left join food_info fi on ofr.food_id = fi._id and fi.is_delete = 0
