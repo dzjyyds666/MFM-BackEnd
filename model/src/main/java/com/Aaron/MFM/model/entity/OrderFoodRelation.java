@@ -35,6 +35,8 @@ public class OrderFoodRelation implements Serializable {
      */
     private Integer foodId;
 
+    private Integer number;
+
     /**
      * 是否删除
      */
@@ -73,6 +75,14 @@ public class OrderFoodRelation implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public Integer getNumber() {
+		return number;
+	}
+
+    public void setNumber(Integer number) {
+		this.number = number;
+	}
+
     @Override
     public String toString() {
         return "OrderFoodRelation{" +
@@ -80,6 +90,7 @@ public class OrderFoodRelation implements Serializable {
             ", orderId = " + orderId +
             ", foodId = " + foodId +
             ", isDelete = " + isDelete +
+            ", number = " + number +
         "}";
     }
 }

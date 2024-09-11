@@ -60,13 +60,22 @@ public class OrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, Order
 
         orderInfoMapper.insert(orderInfo);
 
+        HashMap<Integer,Integer> map = new HashMap<>();
         for (Integer i : orderVo.getFoodIdList()) {
-            OrderFoodRelation orderFoodRelation = new OrderFoodRelation();
-
-            orderFoodRelation.setFoodId(i);
-            orderFoodRelation.setOrderId(orderInfo.getId());
-            orderFoodRelationMapper.insert(orderFoodRelation);
+            if(map.containsKey(i)){
+                map.put(i,map.get(i)+1);
+            }else{
+                map.put(i,1);
+            }
         }
+
+        map.forEach((key,value)->{
+            OrderFoodRelation orderFoodRelation = new OrderFoodRelation();
+            orderFoodRelation.setOrderId(orderInfo.getId());
+            orderFoodRelation.setFoodId(key);
+            orderFoodRelation.setNumber(value);
+            orderFoodRelationMapper.insert(orderFoodRelation);
+        });
 
         MessagePostProcessor postProcessor = message -> {
             // 设置过期时间  15分钟订单自动过期
@@ -79,7 +88,6 @@ public class OrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, Order
                 orderInfo.getOrderNumber(),// 消息内容
                 postProcessor
                );
-        System.out.println("发送成功");
     }
 
     @Override
