@@ -53,7 +53,6 @@ public enum ResultCodeEnum {
 
 
 
-
     private final Integer code;
 
     private final String message;
