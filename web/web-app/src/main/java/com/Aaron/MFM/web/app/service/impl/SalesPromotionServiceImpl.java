@@ -4,6 +4,7 @@ package com.Aaron.MFM.web.app.service.impl;
 import com.Aaron.MFM.common.Login.LoginHolder;
 import com.Aaron.MFM.common.exception.MFMException;
 import com.Aaron.MFM.common.rabbitmq.RabbitConfig;
+import com.Aaron.MFM.common.websocket.WebSocketServer;
 import com.Aaron.MFM.model.entity.OrderFoodRelation;
 import com.Aaron.MFM.model.entity.OrderInfo;
 import com.Aaron.MFM.model.entity.SalesPromotion;
@@ -22,7 +23,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -55,6 +58,9 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
     @Autowired
     private OrderFoodRelationMapper orderFoodRelationMapper;
 
+    @Autowired
+    private WebSocketServer webSocketServer;
+
     @Override
     public List<SalesPromotionVo> getSalePromotionList() {
 
@@ -65,10 +71,9 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
     public void snapped(Integer id) {
         // 获取用户信息
         Long userId = LoginHolder.getLoginUser().getId();
-
+        // TODO
+        webSocketServer.sendMessage(userId.toString(), "抢购成功");
         String LOCAK_KEY = "salesPromotion";
-
-
         // 获取锁
         boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(LOCAK_KEY,"locked", Duration.ofSeconds(1));
         if(lockAcquired){
@@ -89,6 +94,7 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         }
         // 把订单信息存入消息队列
         String order = userId+":"+id;
+
         rabbitTemplate.convertAndSend(RabbitConfig.ORDER_EXCHANGE,RabbitConfig.ORDER_ROUTING_KEY,order);
     }
     @RabbitListener(queues = RabbitConfig.ORDER_QUEUE)

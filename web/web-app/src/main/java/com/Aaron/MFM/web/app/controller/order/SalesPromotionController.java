@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class SalesPromotionController {
 
     @Autowired
     private ISalesPromotionService salesPromotionService;
+
 
     @GetMapping("/getSalePromotionList")
     @Operation(summary = "获取促销列表")
