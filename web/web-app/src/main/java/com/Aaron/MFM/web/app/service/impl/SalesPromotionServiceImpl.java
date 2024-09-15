@@ -21,6 +21,7 @@ import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -47,7 +48,8 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
     private SalesPromotionMapper salesPromotionMapper;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    @Qualifier("redisSToITemplate")
+    private RedisTemplate<String,Integer> redisTemplate;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -75,16 +77,16 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         webSocketServer.sendMessage(userId.toString(), "抢购成功");
         String LOCAK_KEY = "salesPromotion";
         // 获取锁
-        boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(LOCAK_KEY,"locked", Duration.ofSeconds(1));
+        boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(LOCAK_KEY,1, Duration.ofSeconds(1));
         if(lockAcquired){
             try{
                 // 查询库存是否充足
-                Integer number = Integer.parseInt(redisTemplate.opsForValue().get("salesPromotion:" + id)) ;
+                Integer number = redisTemplate.opsForValue().get("salesPromotion:" + id);
                 if(number == null || number <= 0){
                     throw new MFMException(201,"库存不足");
                 }
                 // 库存减一
-                redisTemplate.opsForValue().set("salesPromotion:"+id, String.valueOf((number-1)));
+                redisTemplate.opsForValue().decrement("salesPromotion:" + id);
             }finally {
                 // 释放锁
                 redisTemplate.delete(LOCAK_KEY);
@@ -128,7 +130,6 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         orderFoodRelation.setOrderId(orderInfo.getId());
         orderFoodRelation.setFoodId(salesPromotion.getFoodId());
         orderFoodRelationMapper.insert(orderFoodRelation);
-
     }
 
 }

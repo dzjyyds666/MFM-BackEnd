@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private StringRedisTemplate redisTemplate;
 
     @Autowired
+    @Qualifier("redisSToITemplate")
     private RedisTemplate<String,Integer> redisTemplate1;
 
     @Override
@@ -62,7 +64,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         if (count == null){
             // 第一次访问，设置过期时间
             redisTemplate1.opsForValue().set(redisKey,1,60, TimeUnit.SECONDS);
-        }else if(count > 5){
+        }else if(count >= 5){
             throw new MFMException(ResultCodeEnum.REPEAT_SUBMIT);
         }else{
             redisTemplate1.opsForValue().increment(redisKey);

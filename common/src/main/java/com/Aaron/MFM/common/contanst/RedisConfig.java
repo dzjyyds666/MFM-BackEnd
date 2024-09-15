@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class RedisConfig {
 
     @Bean
-    public RedisTemplate<String, Integer> redisTemplate(RedisConnectionFactory factory){
+    public RedisTemplate<String, Integer> redisSToITemplate(RedisConnectionFactory factory){
         RedisTemplate<String, Integer> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         // 设置key和value的序列化方式

@@ -6,6 +6,7 @@ import com.Aaron.MFM.web.admin.service.ISalesPromotionService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,8 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
     private SalesPromotionMapper salesPromotionMapper;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
-
+    @Qualifier("redisSToITemplate")
+    private RedisTemplate<String,Integer> redisTemplate;
     @Override
     public List<SalesPromotion> getSalesPromotionList() {
         return salesPromotionMapper.getSalesPromotionList();
@@ -47,7 +48,7 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
 
         if(isShelves == 1){
             // 添加缓存
-            redisTemplate.opsForValue().set("salesPromotion:"+id,salesPromotion.getNumber().toString());
+            redisTemplate.opsForValue().set("salesPromotion:"+id,salesPromotion.getNumber());
         }else if(isShelves == 0){
             // 删除缓存
             redisTemplate.delete("salesPromotion:"+id);

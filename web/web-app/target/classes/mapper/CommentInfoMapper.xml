@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Aaron.MFM.web.app.mapper.CommentInfoMapper">
+
+    <resultMap id="CommentVo" type="com.Aaron.MFM.web.app.vo.comment.CommentVo" autoMapping="true">
+        <id property="id" column="_id"/>
+        <association property="userInfo" javaType="com.Aaron.MFM.model.entity.UserInfo">
+            <id property="id" column="user_id"/>
+            <result property="nickname" column="nickname"/>
+            <result property="avatarUrl" column="avatar_url"/>
+        </association>
+        <association property="foodInfo" javaType="com.Aaron.MFM.model.entity.FoodInfo" autoMapping="true">
+            <id property="id" column="food_id"/>
+        </association>
+    </resultMap>
+
+    <select id="getCommentByFoodId" resultMap="CommentVo">
+        select ci._id,
+               ci.comment_content,
+               ci.create_time,
+               ci.food_id,
+               ci.user_id,
+               ui._id user_id,
+               ui.nickname,
+               ui.avatar_url,
+               fi._id food_id,
+               fi.food_name,
+               fi.pic_url
+        from comment_info ci
+        left join user_info ui on ci.user_id = ui._id and ui.is_delete = 0
+        left join food_info fi on ci.food_id = fi._id and fi.is_delete = 0
+        <where>
+            ci.is_delete = 0
+            <if test="foodId != null">
+                and ci.food_id = #{foodId}
+            </if>
+            <if test="userId != null">
+                and ci.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+</mapper>

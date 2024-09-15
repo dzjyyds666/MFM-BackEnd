@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Aaron.MFM.web.app.mapper.OrderInfoMapper">
+
+    <resultMap id="OrderInfoVoMap" type="com.Aaron.MFM.web.app.vo.order.OrderInfoVo"  autoMapping="true">
+        <id property="id" column="_id"/>
+        <association property="orderStatus" javaType="com.Aaron.MFM.model.entity.OrderStatus">
+            <id property="id" column="staus_id"/>
+            <result property="statusName" column="status_name"/>
+        </association>
+        <collection property="foodInfoList" ofType="com.Aaron.MFM.model.entity.FoodInfo">
+            <id property="id" column="food_id"/>
+            <result property="foodName" column="food_name"/>
+            <result property="picUrl" column="pic_url"/>
+            <result property="isRecommend" column="is_recommend"/>
+        </collection>
+        <collection property="orderFoodRelationList" ofType="com.Aaron.MFM.model.entity.OrderFoodRelation">
+            <id property="id" column="relation_id"/>
+            <result property="foodId" column="food_id"/>
+            <result property="number" column="number"/>
+        </collection>
+    </resultMap>
+
+    <select id="getOrderById" resultMap="OrderInfoVoMap">
+        select oi._id,
+               oi.order_number,
+               oi.staus_id,
+               oi.total,
+               ofr.food_id,
+               ofr.number,
+               ofr._id as relation_id,
+               fi._id as food_id,
+               fi.food_name,
+               fi.pic_url,
+               fi.is_recommend,
+               os.status_name
+        from order_info oi
+                 left join order_food_relation ofr on oi._id = ofr.order_id and ofr.is_delete = 0
+                 left join food_info fi on ofr.food_id = fi._id and fi.is_delete = 0
+                 left join order_status os on oi.staus_id = os._id and os.is_delete = 0
+        <where>
+            oi.is_delete = 0
+            <if test="id != null">
+                and oi._id = #{id}
+            </if>
+            <if test="userId != null">
+                and oi.user_id = #{userId}
+            </if>
+        </where>
+        order by oi.create_time desc
+    </select>
+</mapper>
