@@ -1,0 +1,15 @@
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/Login/LoginHolder.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/minio/MinioConfiguration.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/minio/MinioProperties.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/result/Result.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/redis/RedisConfig.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/websocket/WebSocketConfig.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/websocket/OrderSocketServer.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/result/ResultCodeEnum.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/contanst/RedisConstant.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/rabbitmq/RabbitConfig.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/exception/GlobalExceptionHandler.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/Login/LoginUser.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/exception/MFMException.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/utils/JWTutils.java
+/Users/zhijundu/code/IdeaProjects/MFM/common/src/main/java/com/Aaron/MFM/common/websocket/ChatSocketServer.java

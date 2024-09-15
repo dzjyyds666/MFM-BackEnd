@@ -1,0 +1,15 @@
+com/Aaron/MFM/model/entity/SalesPromotion.class
+com/Aaron/MFM/model/entity/OrderFoodRelation.class
+com/Aaron/MFM/model/entity/OrderStatus.class
+com/Aaron/MFM/model/enums/OrderStatusEnum.class
+com/Aaron/MFM/model/entity/FoodInfo.class
+com/Aaron/MFM/model/entity/FoodLabelRelation.class
+com/Aaron/MFM/model/entity/ComboInfo.class
+com/Aaron/MFM/model/entity/CommentInfo.class
+com/Aaron/MFM/model/entity/CityInfo.class
+com/Aaron/MFM/model/entity/ProvinceInfo.class
+com/Aaron/MFM/model/entity/OrderInfo.class
+com/Aaron/MFM/model/entity/FoodStatus.class
+com/Aaron/MFM/model/entity/ComboFoodRelation.class
+com/Aaron/MFM/model/entity/UserInfo.class
+com/Aaron/MFM/model/entity/FoodLabel.class

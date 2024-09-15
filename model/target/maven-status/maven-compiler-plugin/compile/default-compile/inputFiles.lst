@@ -1,0 +1,15 @@
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/FoodInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/SalesPromotion.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/OrderInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/CityInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/OrderStatus.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/FoodLabelRelation.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/CommentInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/enums/OrderStatusEnum.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/ComboInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/ComboFoodRelation.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/FoodLabel.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/OrderFoodRelation.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/ProvinceInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/UserInfo.java
+/Users/zhijundu/code/IdeaProjects/MFM/model/src/main/java/com/Aaron/MFM/model/entity/FoodStatus.java

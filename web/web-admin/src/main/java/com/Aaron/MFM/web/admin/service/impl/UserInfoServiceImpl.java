@@ -17,6 +17,7 @@ import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -41,6 +42,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    @Autowired
+    private RedisTemplate<String,Object> ChatCacheRedisTemplate;
 
 
     /*
@@ -106,7 +110,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         String token = JWTutils.createToken(userInfo.getId(),userInfo.getRole());
 
         redisTemplate.opsForValue().set(RedisConstant.ADMIN_LOGIN_PREFIX + userInfo.getId(),token,RedisConstant.TOKEN_TTL_SEC,TimeUnit.SECONDS);
-
+        ChatCacheRedisTemplate.opsForValue().set(RedisConstant.ADMIN_LOGIN_PREFIX + userInfo.getId(),token,RedisConstant.TOKEN_TTL_SEC,TimeUnit.SECONDS);
         return token;
     }
 
