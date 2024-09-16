@@ -83,6 +83,7 @@ public class OrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, Order
             return message;
         };
 
+        // 发送订单信息到rabbitmq, 15分钟未支付自动取消
         rabbitTemplate.convertAndSend(RabbitConfig.DELAYED_EXCHANGE_NAME,// 交换机
                 RabbitConfig.DELAYED_ROUTING_KEY,// 路由键
                 orderInfo.getOrderNumber(),// 消息内容

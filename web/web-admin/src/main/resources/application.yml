@@ -39,9 +39,9 @@ spring:
       max-request-size: 1024MB
 
 #用于打印框架生成的sql语句，便于调试
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 minio:

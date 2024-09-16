@@ -54,15 +54,6 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private OrderInfoMapper orderInfoMapper;
-
-    @Autowired
-    private OrderFoodRelationMapper orderFoodRelationMapper;
-
-    @Autowired
-    private WebSocketServer webSocketServer;
-
     @Override
     public List<SalesPromotionVo> getSalePromotionList() {
 
@@ -74,7 +65,6 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         // 获取用户信息
         Long userId = LoginHolder.getLoginUser().getId();
         // TODO
-        webSocketServer.sendMessage(userId.toString(), "抢购成功");
         String LOCAK_KEY = "salesPromotion";
         // 获取锁
         boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(LOCAK_KEY,1, Duration.ofSeconds(1));
@@ -98,38 +88,6 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         String order = userId+":"+id;
 
         rabbitTemplate.convertAndSend(RabbitConfig.ORDER_EXCHANGE,RabbitConfig.ORDER_ROUTING_KEY,order);
-    }
-    @RabbitListener(queues = RabbitConfig.ORDER_QUEUE)
-    public void orderListener(String order){
-        String[] split = order.split(":");
-        Long userId = Long.parseLong(split[0]);
-        Integer salesPromotionId = Integer.parseInt(split[1]);
-        // 获取促销信息
-        SalesPromotion salesPromotion = salesPromotionMapper.selectById(salesPromotionId);
-
-        if(salesPromotion.getNumber()<= 0){
-            throw new MFMException(201,"库存不足");
-        }
-
-        // 减少库存
-        LambdaUpdateWrapper<SalesPromotion> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(SalesPromotion::getId,salesPromotionId).set(SalesPromotion::getNumber,salesPromotion.getNumber()-1);
-        salesPromotionMapper.update(null,updateWrapper);
-
-        // 设置订单信息
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setUserId(userId);
-        orderInfo.setOrderNumber(UUID.randomUUID().toString().replaceAll("-","A").substring(0,16));
-        orderInfo.setTotal(salesPromotion.getPrice());
-        orderInfo.setStausId(2);
-        // 插入订单信息
-        orderInfoMapper.insert(orderInfo);
-
-        // 插入订单和菜品关系
-        OrderFoodRelation orderFoodRelation = new OrderFoodRelation();
-        orderFoodRelation.setOrderId(orderInfo.getId());
-        orderFoodRelation.setFoodId(salesPromotion.getFoodId());
-        orderFoodRelationMapper.insert(orderFoodRelation);
     }
 
 }

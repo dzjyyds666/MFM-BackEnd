@@ -1,4 +1,4 @@
-package com.Aaron.MFM.common.websocket;
+package com.Aaron.MFM.common.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

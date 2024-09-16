@@ -1,8 +1,9 @@
-package com.Aaron.MFM.common.websocket;
+package com.Aaron.MFM.web.app.custom.websocket;
 
 import com.Aaron.MFM.common.chat.ChatVo;
 import com.Aaron.MFM.common.exception.MFMException;
 import com.Aaron.MFM.common.rabbitmq.RabbitConfig;
+import com.Aaron.MFM.common.utils.SpringContextHolder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnMessage;
@@ -60,14 +61,8 @@ public class ChatSocketServer {
             throw new MFMException(500, "消息解析失败");
         }
         if(chatVo != null){
-            // 发送消息到对方
-            int isSend = sendMessage(chatVo.getReceiverId().toString(), message);
-            if(isSend == 0){
-                // 对方不在线
-                log.info("对方不在线");
-            }
-            // 把消息发送到消息队列, 存入数据库
-            rabbitTemplate.convertAndSend(RabbitConfig.CHAT_EXCHANGE, RabbitConfig.CHAT_ROUTING_KEY, message);
+            // 把发送给商家消息发送到消息队列, 存入数据库
+            rabbitTemplate.convertAndSend(RabbitConfig.CHAT_EXCHANGE_TO_SELLER, RabbitConfig.CHAT_ROUTING_KEY_TO_SELLER, message);
         }
     }
 

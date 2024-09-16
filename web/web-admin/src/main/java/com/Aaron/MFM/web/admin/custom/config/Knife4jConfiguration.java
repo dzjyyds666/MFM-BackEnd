@@ -80,4 +80,12 @@ public class Knife4jConfiguration {
                 .pathsToMatch("/admin/file/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi chatApi() {
+        return GroupedOpenApi.builder()
+                .group("后台聊天管理")
+                .pathsToMatch("/admin/chat/**")
+                .build();
+    }
 }

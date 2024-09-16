@@ -19,11 +19,17 @@ public class RabbitConfig {
     public static final String DELAYED_EXCHANGE_NAME = "delay.queue.delay.exchange";
     public static final String DELAYED_ROUTING_KEY = "delay.queue.delay.routingkey";
 
-    public static final String CHAT_QUEUE = "chat.queue";
+    public static final String CHAT_QUEUE_TO_SELLER = "chat.queue.seller";
 
-    public static final String CHAT_EXCHANGE = "chat.exchange";
+    public static final String CHAT_EXCHANGE_TO_SELLER = "chat.exchange.seller";
 
-    public static final String CHAT_ROUTING_KEY = "chat.routingkey";
+    public static final String CHAT_ROUTING_KEY_TO_SELLER = "chat.routingkey.seller";
+
+    public static final String CHAT_QUEUE_TO_USER = "chat.queue.user";
+
+    public static final String CHAT_EXCHANGE_TO_USER = "chat.exchange.user";
+
+    public static final String CHAT_ROUTING_KEY_TO_USER = "chat.routingkey.user";
 
     public static final String ORDER_QUEUE = "order.queue";
 
@@ -47,20 +53,37 @@ public class RabbitConfig {
      }
 
     @Bean
-    public Queue ChatQueue() {
-        return new Queue(CHAT_QUEUE, true);
+    public Queue ChatQueueToSeller() {
+        return new Queue(CHAT_QUEUE_TO_SELLER, true);
     }
 
     @Bean
-    public DirectExchange chatExchange() {
-        return new DirectExchange(CHAT_EXCHANGE, true, false);
+    public DirectExchange chatExchangeToSeller() {
+        return new DirectExchange(CHAT_EXCHANGE_TO_SELLER, true, false);
     }
 
     @Bean
-    public Binding bindingDelayed(@Qualifier("ChatQueue") Queue queue,
-                                  @Qualifier("chatExchange") DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(CHAT_ROUTING_KEY);
+    public Binding bindingChatToSeller(@Qualifier("ChatQueueToSeller") Queue queue,
+                                  @Qualifier("chatExchangeToSeller") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(CHAT_ROUTING_KEY_TO_SELLER);
     }
+
+    @Bean
+    public Queue ChatQueueToUser() {
+        return new Queue(CHAT_QUEUE_TO_USER, true);
+    }
+
+    @Bean
+    public DirectExchange chatExchangeToUser() {
+        return new DirectExchange(CHAT_EXCHANGE_TO_USER, true, false);
+    }
+
+    @Bean
+    public Binding bindingChatToUser(@Qualifier("ChatQueueToUser") Queue queue,
+                                  @Qualifier("chatExchangeToUser") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(CHAT_ROUTING_KEY_TO_USER);
+    }
+
 
     @Bean
     public Queue immediateQueue() {
@@ -74,6 +97,7 @@ public class RabbitConfig {
         return new CustomExchange(DELAYED_EXCHANGE_NAME, "x-delayed-message", true, false, args);
     }
 
+    // 绑定延迟队列和交换机
     @Bean
     public Binding bindingNotify(@Qualifier("immediateQueue") Queue queue,
                                  @Qualifier("customExchange") CustomExchange customExchange) {

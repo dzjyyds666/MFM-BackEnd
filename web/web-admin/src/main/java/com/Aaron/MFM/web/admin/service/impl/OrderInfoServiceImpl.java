@@ -141,18 +141,5 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
 
-    @RabbitListener(queues = RabbitConfig.DELAYED_QUEUE_NAME)
-    public void orderExpire(String orderNumber) {
-        LambdaQueryWrapper<OrderInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(OrderInfo::getOrderNumber, orderNumber);
-        OrderInfo orderInfo = orderInfoMapper.selectOne(queryWrapper);
 
-        if(orderInfo.getStausId() == OrderStatusEnum.PALCE_ORDER.getValue()){
-            LambdaUpdateWrapper<OrderInfo> updateWrapper = new LambdaUpdateWrapper<>();
-            updateWrapper.eq(OrderInfo::getOrderNumber, orderNumber);
-            updateWrapper.set(OrderInfo::getStausId, OrderStatusEnum.CANCELDEL.getValue());
-            orderInfoMapper.update(null, updateWrapper);
-        }
-
-    }
 }
