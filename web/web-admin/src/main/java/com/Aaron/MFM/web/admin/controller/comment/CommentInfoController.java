@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.admin.controller.comment;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.ICommentInfoService;
 import com.Aaron.MFM.web.admin.vo.comment.CommentInfoVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +30,7 @@ public class CommentInfoController {
 
     @GetMapping("/getCommentList")
     @Operation(summary = "获取评论列表")
+    @LimitAccess
     public Result<List<CommentInfoVo>> getCommentList() {
         List<CommentInfoVo> list = commentInfoService.getCommentList();
         return Result.ok(list);
@@ -36,6 +38,7 @@ public class CommentInfoController {
 
     @Operation(summary = "删除评论")
     @DeleteMapping("/deleteComment")
+    @LimitAccess
     public Result<String> deleteComment(@RequestParam Integer id) {
         commentInfoService.removeById(id);
         return Result.ok("删除成功");
@@ -43,12 +46,14 @@ public class CommentInfoController {
 
     @Operation(summary = "根据用户id查询评论")
     @GetMapping("/getCommentByUserId")
+    @LimitAccess
     public Result<List<CommentInfoVo>> getCommentByUserId(@RequestParam Long userId) {
         return Result.ok(commentInfoService.getCommentListByUserId(userId));
     }
 
     @Operation(summary = "根据食品Id查询评论")
     @GetMapping("/getCommentByFoodId")
+    @LimitAccess
     public Result<List<CommentInfoVo>> getCommentByFoodId(@RequestParam Integer foodId) {
         return Result.ok(commentInfoService.getCommentListByFoodId(foodId));
     }

@@ -2,6 +2,7 @@ package com.Aaron.MFM.web.app.controller.file;
 
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.service.IFileUploadService;
 import io.minio.errors.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +25,7 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     @Operation(summary = "上传文件")
+    @LimitAccess
     public Result<String> upload(@RequestParam MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         return Result.ok(fileUploadService.upload(file));
     }

@@ -6,6 +6,7 @@ import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.common.result.ResultCodeEnum;
 import com.Aaron.MFM.model.entity.FoodStatus;
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IFoodStatusService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,6 +36,7 @@ public class FoodStatusController {
 
     @GetMapping("/getFoodStatusList")
     @Operation(summary = "获取食物状态列表")
+    @LimitAccess
     public Result<List<FoodStatus>> getFoodStatusList() {
         List<FoodStatus> list = foodStatusService.list();
         return Result.ok(list);
@@ -42,6 +44,7 @@ public class FoodStatusController {
 
     @PostMapping("addOrUpStatus")
     @Operation(summary = "添加或修改食物状态")
+    @LimitAccess
     public Result<String> addOrUpDateFoodStatus(@RequestBody FoodStatus foodStatus) {
 
         if(StringUtils.hasText(foodStatus.getStatusName()) == false){
@@ -53,6 +56,7 @@ public class FoodStatusController {
 
     @Operation(summary = "删除食物状态")
     @DeleteMapping("deleteFoodStatus")
+    @LimitAccess
     public Result<String> deleteFoodStatus(@RequestParam Integer id) {
         UserInfo loginUser = LoginHolder.getLoginUser();
         if (!loginUser.getRole().equals("超级管理员") && !loginUser.getRole().equals("管理员")) {

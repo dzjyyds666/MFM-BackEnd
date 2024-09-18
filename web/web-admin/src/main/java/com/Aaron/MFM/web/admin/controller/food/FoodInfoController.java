@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.admin.controller.food;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IFoodInfoService;
 import com.Aaron.MFM.web.admin.vo.food.AddFoodInfoVo;
 import com.Aaron.MFM.web.admin.vo.food.ChangeFoodInfoVo;
@@ -30,6 +31,7 @@ public class FoodInfoController {
 
     @Operation(summary = "获取菜品列表")
     @GetMapping("/getFoodList")
+    @LimitAccess
     public Result<List<FoodInfoVo>> getFoodList(){
         List<FoodInfoVo> list = foodInfoService.getFoodList();
         return Result.ok(list);
@@ -37,6 +39,7 @@ public class FoodInfoController {
 
     @Operation(summary = "修改菜品信息")
     @PostMapping("/changeFoodInfo")
+    @LimitAccess
     public Result<FoodInfoVo> getFoodDetail(@RequestBody ChangeFoodInfoVo changeFoodInfoVo){
         foodInfoService.changeFoodInfo(changeFoodInfoVo);
         return Result.ok();
@@ -44,6 +47,7 @@ public class FoodInfoController {
 
     @Operation(summary = "添加菜品信息")
     @PostMapping("/addFoodInfo")
+    @LimitAccess
     public Result<String> addFoodInfo(@RequestBody AddFoodInfoVo foodInfoVo){
         foodInfoService.addFoodInfo(foodInfoVo);
         return Result.ok();
@@ -51,6 +55,7 @@ public class FoodInfoController {
 
     @DeleteMapping("/deleteFoodInfo")
     @Operation(summary = "删除菜品信息")
+    @LimitAccess
     public Result<String> deleteFoodInfo(@RequestParam Long id){
         foodInfoService.removeFoodInfo(id);
         return Result.ok("删除成功");
@@ -58,6 +63,7 @@ public class FoodInfoController {
 
     @GetMapping("/changeStatus")
     @Operation(summary = "修改菜品状态")
+    @LimitAccess
     public Result<String> changeStatus(@RequestParam Integer id,@RequestParam Integer statusId){
         foodInfoService.changeStatus(id,statusId);
         return Result.ok("修改成功");

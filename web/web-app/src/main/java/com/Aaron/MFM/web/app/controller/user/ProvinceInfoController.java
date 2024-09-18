@@ -3,6 +3,7 @@ package com.Aaron.MFM.web.app.controller.user;
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.model.entity.ProvinceInfo;
 import com.Aaron.MFM.web.admin.service.IProvinceInfoService;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class ProvinceInfoController {
 
     @GetMapping("/getProvinceList")
     @Operation(summary = "获取省份列表")
+    @LimitAccess
     public Result<List<ProvinceInfo>> getProvinceList() {
         return Result.ok(provinceInfoService.list());
     }

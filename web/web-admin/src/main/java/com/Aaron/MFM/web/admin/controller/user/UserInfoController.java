@@ -5,6 +5,7 @@ import com.Aaron.MFM.common.exception.MFMException;
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.common.result.ResultCodeEnum;
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IUserInfoService;
 import com.Aaron.MFM.web.admin.vo.user.UserInfoVo;
 import com.Aaron.MFM.web.admin.vo.user.changeUserRoleVo;
@@ -38,6 +39,7 @@ public class UserInfoController {
 
     @GetMapping("/getuser")
     @Operation(summary = "获取用户个人信息")
+    @LimitAccess
     public Result<UserInfoVo> getUserInfo() {
         UserInfoVo userInfo = userInfoService.getUserInfo();
         return Result.ok(userInfo);
@@ -45,6 +47,7 @@ public class UserInfoController {
 
     @GetMapping("/getuserlist")
     @Operation(summary = "获取用户列表")
+    @LimitAccess
     public Result<List<UserInfoVo>> getUserList() {
         List<UserInfoVo> list = userInfoService.getUserList();
         return Result.ok(list);
@@ -52,6 +55,7 @@ public class UserInfoController {
 
     @PostMapping("/upOradd")
     @Operation(summary = "注册或修改用户信息")
+    @LimitAccess
     public Result<String> register(@RequestBody UserInfo userInfo) {
 
         if(StringUtils.hasText(userInfo.getPhone()) == false){
@@ -82,6 +86,7 @@ public class UserInfoController {
 
     @Operation(summary = "修改用户角色")
     @PostMapping("/upRole")
+    @LimitAccess
     public Result<String> changeRole(@RequestBody changeUserRoleVo changeUserRoleVo){
         UserInfo userInfo = new UserInfo();
         userInfo.setRole(changeUserRoleVo.getRole());
@@ -97,8 +102,8 @@ public class UserInfoController {
 
     @Operation(summary = "删除用户")
     @DeleteMapping("/delete")
+    @LimitAccess
     public Result<String> deleteUser(@RequestParam Long id){
-
         userInfoService.removeUser(id);
         return Result.ok("删除成功");
     }

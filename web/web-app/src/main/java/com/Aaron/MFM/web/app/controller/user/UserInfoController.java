@@ -3,6 +3,7 @@ package com.Aaron.MFM.web.app.controller.user;
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.model.entity.UserInfo;
 import com.Aaron.MFM.web.admin.service.IUserInfoService;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.vo.user.UserInfoVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +29,7 @@ public class UserInfoController {
 
     @GetMapping("/getUserInfo")
     @Operation(summary = "获取用户个人信息")
+    @LimitAccess
     public Result<UserInfoVo> getUserInfo() {
         UserInfoVo userinfo = userInfoService.getUserInfo();
         return Result.ok(userinfo);
@@ -35,6 +37,7 @@ public class UserInfoController {
 
     @PostMapping("/updateInfo")
     @Operation(summary = "更新用户个人信息")
+    @LimitAccess
     public Result<String> updateInfo(@RequestBody UserInfo userinfo) {
         userInfoService.updateInfo(userinfo);
         return Result.ok("更新成功");

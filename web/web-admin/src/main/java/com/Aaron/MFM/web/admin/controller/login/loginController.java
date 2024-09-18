@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.admin.controller.login;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IUserInfoService;
 import com.Aaron.MFM.web.admin.vo.login.CaptchaVo;
 import com.Aaron.MFM.web.admin.vo.login.LoginInfoVo;
@@ -19,6 +20,7 @@ public class loginController {
 
     @GetMapping("/captcha")
     @Operation(summary = "获取验证码")
+    @LimitAccess(maxAccessCount = 1)
     public Result<CaptchaVo> getCaptcha(){
         CaptchaVo captchaVo = userInfoService.getCaptcha();
         return Result.ok(captchaVo);
@@ -26,6 +28,7 @@ public class loginController {
 
     @PostMapping
     @Operation(summary = "登录")
+    @LimitAccess
     public Result<String> login(@RequestBody LoginInfoVo loginInfoVo){
         String token = userInfoService.login(loginInfoVo);
         return Result.ok(token);

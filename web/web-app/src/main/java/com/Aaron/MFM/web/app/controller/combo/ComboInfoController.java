@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.app.controller.combo;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.service.IComboInfoService;
 import com.Aaron.MFM.web.app.vo.combo.ComboInfoVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +31,7 @@ public class ComboInfoController {
 
     @GetMapping("/getComboList")
     @Operation(summary = "获取套餐列表")
+    @LimitAccess
     public Result<List<ComboInfoVo>> getComboList() {
         List<ComboInfoVo> comboInfoVoList = comboInfoService.getComboList();
         return Result.ok(comboInfoVoList);

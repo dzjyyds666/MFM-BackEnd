@@ -57,16 +57,16 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
         // redis做限流
         // 判断用户是否访问过该接口
-        String redisKey = "user-" + userInfo.getId() + "-" + request.getRequestURI();
-        Integer count = redisTemplate1.opsForValue().get(redisKey);
-        if (count == null){
-            // 第一次访问，设置过期时间
-            redisTemplate1.opsForValue().set(redisKey,1,60, TimeUnit.SECONDS);
-        }else if(count >= 5){
-            throw new MFMException(ResultCodeEnum.REPEAT_SUBMIT);
-        }else{
-            redisTemplate1.opsForValue().increment(redisKey);
-        }
+//        String redisKey = "user-" + userInfo.getId() + "-" + request.getRequestURI();
+//        Integer count = redisTemplate1.opsForValue().get(redisKey);
+//        if (count == null){
+//            // 第一次访问，设置过期时间
+//            redisTemplate1.opsForValue().set(redisKey,1,60, TimeUnit.SECONDS);
+//        }else if(count >= 5){
+//            throw new MFMException(ResultCodeEnum.REPEAT_SUBMIT);
+//        }else{
+//            redisTemplate1.opsForValue().increment(redisKey);
+//        }
         LoginHolder.setLoginUser(userInfo);
         return true;
     }

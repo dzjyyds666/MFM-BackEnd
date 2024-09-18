@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.MFM.web.app.mapper.ChatInfoMapper">
 
+    <delete id="deleteChatInfoExpired">
+        DELETE FROM chat_info WHERE  DATE_SUB(CURDATE(), INTERVAL 30 DAY) >= create_time ;
+    </delete>
 </mapper>

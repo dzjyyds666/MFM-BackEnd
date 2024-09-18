@@ -4,4 +4,5 @@ import com.Aaron.MFM.model.entity.ChatInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 public interface ChatInfoMapper extends BaseMapper<ChatInfo> {
+    void deleteChatInfoExpired();
 }

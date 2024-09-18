@@ -5,6 +5,7 @@ import com.Aaron.MFM.common.result.Result;
 
 import com.Aaron.MFM.model.entity.OrderInfo;
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.service.IOrderStatusService;
 import com.Aaron.MFM.web.app.vo.order.OrderInfoVo;
 import com.Aaron.MFM.web.app.vo.order.OrderStatusVo;
@@ -34,6 +35,7 @@ public class OrderInfoController {
 
     @PostMapping("/createOrder")
     @Operation(summary = "创建订单")
+    @LimitAccess
     public Result<String> createOrder(@RequestBody OrderVo orderInfo) {
         String orderNumber = orderStatusService.addOrder(orderInfo);
         return Result.ok(orderNumber);
@@ -41,6 +43,7 @@ public class OrderInfoController {
 
     @PostMapping("/updateOrder")
     @Operation(summary = "更新订单")
+    @LimitAccess(maxAccessCount = 1)
     public Result<String> updateOrder(@RequestBody OrderStatusVo orderStatusVo) {
         orderStatusService.updateOrder(orderStatusVo);
         return Result.ok("更新成功");
@@ -48,6 +51,7 @@ public class OrderInfoController {
 
     @GetMapping("/GetOrderById")
     @Operation(summary = "根据订单id获取订单信息")
+    @LimitAccess
     public Result<List<OrderInfoVo>> getOrderById(@RequestParam(required = false) Integer id){
         UserInfo loginUser = LoginHolder.getLoginUser();
         return Result.ok(orderStatusService.getOrderById(loginUser.getId(),id));

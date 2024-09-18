@@ -6,6 +6,7 @@ import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.common.result.ResultCodeEnum;
 import com.Aaron.MFM.model.entity.FoodLabel;
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IFoodLabelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,6 +35,7 @@ public class FoodLabelController {
 
     @Operation(summary = "获取菜品标签列表")
     @GetMapping("/getFoodLabelList")
+    @LimitAccess
     public Result<List<FoodLabel>> getFoodLabelList(){
         List<FoodLabel> list = foodLabelService.list();
         return Result.ok(list);
@@ -41,6 +43,7 @@ public class FoodLabelController {
 
     @Operation(summary = "添加或修改菜品标签")
     @PostMapping("/addOrUpdateFoodLabel")
+    @LimitAccess
     public Result<String> addOrUpdateFoodLabel(@RequestBody FoodLabel foodLabel){
 
         if(StringUtils.hasText(foodLabel.getLabelName()) == false){
@@ -52,6 +55,7 @@ public class FoodLabelController {
 
     @Operation(summary = "删除菜品标签")
     @DeleteMapping("/deleteFoodLabel")
+    @LimitAccess
     public Result<String> deleteFoodLabel(@RequestParam Long id){
         foodLabelService.removeById(id);
         return Result.ok("操作成功");

@@ -5,6 +5,7 @@ import com.Aaron.MFM.common.chat.ChatVo;
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.model.entity.ChatInfo;
 import com.Aaron.MFM.model.entity.UserInfo;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IChatService;
 import com.Aaron.MFM.web.admin.vo.chat.ChatNotReadVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +25,7 @@ public class ChatController {
 
     @PostMapping("getchatList")
     @Operation(summary = "获取聊天记录")
+    @LimitAccess
     private Result<List<ChatInfo>> getChatList(Long receiverId)
     {
         return Result.ok(chatService.getChatList(receiverId));
@@ -31,6 +33,7 @@ public class ChatController {
 
     @PostMapping("sendMessage")
     @Operation(summary = "发送消息")
+    @LimitAccess(maxAccessCount = 60)
     private Result<String> sendMessage(@RequestBody ChatVo chatVo)
     {
         return Result.ok(chatService.sendMessage(chatVo));
@@ -38,6 +41,7 @@ public class ChatController {
 
     @PostMapping("getchatUser")
     @Operation(summary = "获取聊天用户并获取到对应未读消息")
+    @LimitAccess
     private Result<List<ChatNotReadVo>> getChatUser()
     {
         return Result.ok(chatService.getChatUserAndNotRead());
@@ -45,6 +49,7 @@ public class ChatController {
 
     @PostMapping("getMessageOneday")
     @Operation(summary = "获取当天消息")
+    @LimitAccess
     private Result<List<ChatInfo>> getMessageOneday(Long receiverId)
     {
         return Result.ok(chatService.getMessageOneday(receiverId));

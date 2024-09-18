@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.admin.controller.combo;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IComboInfoService;
 import com.Aaron.MFM.web.admin.vo.combo.AddOrUpdateComboVo;
 import com.Aaron.MFM.web.admin.vo.combo.ComboInfoVo;
@@ -30,12 +31,14 @@ public class ComboInfoController {
 
     @GetMapping("/getCommentList")
     @Operation(summary = "获取套餐列表")
+    @LimitAccess
     public Result<List<ComboInfoVo>> getComboList() {
         return Result.ok(comboInfoService.getComboList());
     }
 
     @PostMapping("addOrUpdate")
     @Operation(summary = "添加或修改套餐")
+    @LimitAccess
     public Result<String> addOrUpdateCombo(@RequestBody AddOrUpdateComboVo comboInfoVo) {
 
         System.out.println(comboInfoVo);
@@ -45,6 +48,7 @@ public class ComboInfoController {
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除套餐")
+    @LimitAccess
     public Result<String> deleteCombo(@RequestParam Integer id) {
         comboInfoService.removeById(id);
         return Result.ok("删除成功");
@@ -52,6 +56,7 @@ public class ComboInfoController {
 
     @PostMapping("/searchByCondition")
     @Operation(summary = "根据条件查找套餐")
+    @LimitAccess
     public Result<List<ComboInfoVo>> searchByCondition(@RequestBody SearchComboVo searchComboVo) {
         List<ComboInfoVo> list = comboInfoService.searchByCondition(searchComboVo);
         return Result.ok(list);

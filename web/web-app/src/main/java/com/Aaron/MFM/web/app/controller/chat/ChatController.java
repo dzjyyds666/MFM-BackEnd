@@ -3,6 +3,7 @@ package com.Aaron.MFM.web.app.controller.chat;
 import com.Aaron.MFM.common.chat.ChatVo;
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.model.entity.ChatInfo;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.service.IChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,6 +22,7 @@ public class ChatController {
 
     @GetMapping("getNotReadNumber")
     @Operation(summary = "获取未读消息数量")
+    @LimitAccess
     public Result<Integer> getNotReadNumber()
     {
         return Result.ok(chatService.getNotReadNumber());
@@ -28,6 +30,7 @@ public class ChatController {
 
     @GetMapping("getMessageOneday")
     @Operation(summary = "获取当天消息")
+    @LimitAccess
     public Result<List<ChatInfo>> getMessageOneday()
     {
         return Result.ok(chatService.getMessageOneday());
@@ -35,6 +38,7 @@ public class ChatController {
 
     @PostMapping("sendMessage")
     @Operation(summary = "发送消息")
+    @LimitAccess(maxAccessCount = 60)
     public Result<String> sendMessage(@RequestBody ChatVo chatVo)
     {
         return Result.ok(chatService.sendMessage(chatVo));
@@ -42,6 +46,7 @@ public class ChatController {
 
     @GetMapping("getMessageList")
     @Operation(summary = "获取聊天记录")
+    @LimitAccess
     public Result<List<ChatInfo>> getMessageList()
     {
         return Result.ok(chatService.getMessageList());

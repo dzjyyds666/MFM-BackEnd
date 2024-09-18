@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.admin.controller.order;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.IOrderInfoService;
 import com.Aaron.MFM.web.admin.vo.order.OrderInfoVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,7 @@ public class OrderInfoController {
 
     @Operation(summary = "获取订单列表")
     @GetMapping("/getOrderList")
+    @LimitAccess
     public Result<List<OrderInfoVo>> getOrderList() {
         List<OrderInfoVo> list = orderInfoService.getOrderList();
         System.out.println(list);
@@ -40,6 +42,7 @@ public class OrderInfoController {
 
     @GetMapping("/getOrderById")
     @Operation(summary = "根据订单id获取订单信息")
+    @LimitAccess
     public Result<OrderInfoVo> getOrderById(@RequestParam Integer id) {
         OrderInfoVo orderInfoVo = orderInfoService.getOrderById(id);
         return Result.ok(orderInfoVo);
@@ -47,6 +50,7 @@ public class OrderInfoController {
 
     @DeleteMapping("/deleteOrder")
     @Operation(summary = "删除订单")
+    @LimitAccess
     public Result<String> deleteOrder(@RequestParam Integer id) {
         orderInfoService.removeById(id);
         return Result.ok("删除成功");
@@ -54,6 +58,7 @@ public class OrderInfoController {
 
     @Operation(summary = "修改订单状态")
     @GetMapping("/upOrderStatus")
+    @LimitAccess
     public Result<String> upOrderStatus(@RequestParam Integer id,@RequestParam Integer statusId) {
         orderInfoService.upOrderStatus(id, statusId);
         return Result.ok("修改成功");
@@ -61,6 +66,7 @@ public class OrderInfoController {
 
     @GetMapping("/searchByDate")
     @Operation(summary = "根据日期搜索订单")
+    @LimitAccess
     public Result<List<OrderInfoVo>> search(@RequestParam String dataString) {
         List<OrderInfoVo> list = orderInfoService.searchByDate(dataString);
         return Result.ok(list);

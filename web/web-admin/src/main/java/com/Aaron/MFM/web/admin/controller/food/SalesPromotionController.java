@@ -2,6 +2,7 @@ package com.Aaron.MFM.web.admin.controller.food;
 
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.model.entity.SalesPromotion;
+import com.Aaron.MFM.web.admin.aop.LimitAccess;
 import com.Aaron.MFM.web.admin.service.ISalesPromotionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +30,7 @@ public class SalesPromotionController {
 
     @PostMapping("/addOrUpdate")
     @Operation(summary = "添加或修改促销")
+    @LimitAccess
     public Result<String> addOrUpdateSalesPromotion(@RequestBody SalesPromotion salesPromotion){
         salesPromotionService.saveOrUpdate(salesPromotion);
         return  Result.ok();
@@ -36,6 +38,7 @@ public class SalesPromotionController {
 
     @GetMapping("/Shelves")
     @Operation(summary = "上架或下架促销")
+    @LimitAccess
     public Result<String> shelvesSalesPromotion( @RequestParam Integer id,@RequestParam Integer isShelves){
         salesPromotionService.upShelves(id,isShelves);
         if(isShelves == 1){
@@ -45,6 +48,7 @@ public class SalesPromotionController {
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除促销")
+    @LimitAccess
     public Result<String> deleteSalesPromotion(@RequestParam Integer id){
         salesPromotionService.removeById(id);
         return Result.ok();
@@ -52,6 +56,7 @@ public class SalesPromotionController {
 
     @GetMapping("/getSalesPromotionList")
     @Operation(summary = "获取促销列表")
+    @LimitAccess
     public Result<List<SalesPromotion>> getSalesPromotionList(){
         List<SalesPromotion> list = salesPromotionService.getSalesPromotionList();
         return Result.ok(list);

@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.app.controller.comment;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.service.ICommentInfoService;
 import com.Aaron.MFM.web.app.vo.comment.CommentInfovo;
 import com.Aaron.MFM.web.app.vo.comment.CommentVo;
@@ -30,6 +31,7 @@ public class CommentInfoController {
 
     @GetMapping("/getCommentByFoodId")
     @Operation(summary = "根据userId或foodId查询评论")
+    @LimitAccess
     public Result<List<CommentVo>> getCommentByFoodId(@RequestParam(required = false) Integer foodId, @RequestParam(required = false) Long userId) {
         System.out.print("foodId:"+foodId+"userId:"+userId);
         List<CommentVo> commentVoList = commentInfoService.getCommentByFoodId(foodId,userId);
@@ -38,6 +40,7 @@ public class CommentInfoController {
 
     @PostMapping("/addComment")
     @Operation(summary = "发布评论")
+    @LimitAccess
     public Result<String> addComment(@RequestBody CommentInfovo commentInfo) {
         commentInfoService.addComment(commentInfo);
         return Result.ok("添加成功");

@@ -1,6 +1,7 @@
 package com.Aaron.MFM.web.app.controller.order;
 
 import com.Aaron.MFM.common.result.Result;
+import com.Aaron.MFM.web.app.aop.LimitAccess;
 import com.Aaron.MFM.web.app.service.ISalesPromotionService;
 import com.Aaron.MFM.web.app.vo.order.SalesPromotionVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,12 +33,14 @@ public class SalesPromotionController {
 
     @GetMapping("/getSalePromotionList")
     @Operation(summary = "获取促销列表")
+    @LimitAccess
     public Result<List<SalesPromotionVo>> getSalePromotionList() {
         return Result.ok(salesPromotionService.getSalePromotionList());
     }
 
     @GetMapping("/snapped")
     @Operation(summary = "抢购订单")
+    @LimitAccess
     public Result<String> snapped(Integer id) {
         String orderNumber = salesPromotionService.snapped(id);
         return Result.ok("抢购成功,请稍后到订单页面查看,订单号:"+orderNumber);
