@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -47,6 +49,7 @@ public class ChatServiceImpl extends ServiceImpl<ChatInfoMapper, ChatInfo> imple
     private ObjectMapper objectMapper = new ObjectMapper();
     // 获取聊天记录
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public List<ChatInfo> getChatList(Long receiverId) {
         Long senderId = LoginHolder.getLoginUser().getId();
         LambdaQueryWrapper<ChatInfo> queryWrapper = new LambdaQueryWrapper<>();
@@ -96,6 +99,7 @@ public class ChatServiceImpl extends ServiceImpl<ChatInfoMapper, ChatInfo> imple
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public List<ChatNotReadVo> getChatUserAndNotRead() {
         // 获取当前登录用户的id
         Long senderId = LoginHolder.getLoginUser().getId();

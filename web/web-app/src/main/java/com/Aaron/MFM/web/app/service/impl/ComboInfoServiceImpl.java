@@ -8,6 +8,8 @@ import com.Aaron.MFM.web.app.vo.combo.ComboInfoVo;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class ComboInfoServiceImpl extends ServiceImpl<ComboInfoMapper, ComboInfo
     private ComboInfoMapper comboInfoMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<ComboInfoVo> getComboList() {
 
         return comboInfoMapper.getComboList();

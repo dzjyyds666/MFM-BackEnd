@@ -23,6 +23,8 @@ import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +52,7 @@ public class OrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, Order
     private RabbitTemplate rabbitTemplate;
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void addOrder(OrderVo orderVo) {
         UserInfo loginUser = LoginHolder.getLoginUser();
         OrderInfo orderInfo = new OrderInfo();

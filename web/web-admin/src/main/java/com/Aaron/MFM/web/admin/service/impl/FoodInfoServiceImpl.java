@@ -16,6 +16,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -45,10 +47,11 @@ public class FoodInfoServiceImpl extends ServiceImpl<FoodInfoMapper, FoodInfo> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void changeFoodInfo(ChangeFoodInfoVo changefoodInfoVo) {
         FoodInfo foodInfo = new FoodInfo();
         foodInfo.setId(changefoodInfoVo.getId());
-        if(StringUtils.hasText(changefoodInfoVo.getFoodName()) == false){
+        if(!StringUtils.hasText(changefoodInfoVo.getFoodName())){
             throw new MFMException(201, "修改食物信息失败，名称不能为空");
         }
         foodInfo.setFoodName(changefoodInfoVo.getFoodName());
@@ -57,7 +60,7 @@ public class FoodInfoServiceImpl extends ServiceImpl<FoodInfoMapper, FoodInfo> i
         }
         foodInfo.setPrice(changefoodInfoVo.getPrice());
         foodInfo.setDescription(changefoodInfoVo.getDescription());
-        if(StringUtils.hasText(changefoodInfoVo.getPicUrl())== false){
+        if(!StringUtils.hasText(changefoodInfoVo.getPicUrl())){
             throw new MFMException(201, "修改食物信息失败，图片不能为空");
         }
         foodInfo.setPicUrl(changefoodInfoVo.getPicUrl());
@@ -77,6 +80,7 @@ public class FoodInfoServiceImpl extends ServiceImpl<FoodInfoMapper, FoodInfo> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void addFoodInfo(AddFoodInfoVo foodInfoVo) {
         FoodInfo foodInfo = new FoodInfo();
 
@@ -102,11 +106,13 @@ public class FoodInfoServiceImpl extends ServiceImpl<FoodInfoMapper, FoodInfo> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void removeFoodInfo(Long id) {
         foodInfoMapper.deleteById(id);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void changeStatus(Integer id, Integer statusId) {
         LambdaUpdateWrapper<FoodInfo> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(FoodInfo::getId, id);

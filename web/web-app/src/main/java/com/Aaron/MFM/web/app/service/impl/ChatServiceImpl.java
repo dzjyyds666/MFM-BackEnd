@@ -16,6 +16,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -48,6 +50,7 @@ public class ChatServiceImpl extends ServiceImpl<ChatInfoMapper, ChatInfo> imple
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<ChatInfo> getMessageOneday() {
         Long senderId = LoginHolder.getLoginUser().getId();
         String redis_key = "chat_info_in_oneday:"+ReceiverId+"-"+senderId;
@@ -126,6 +129,7 @@ public class ChatServiceImpl extends ServiceImpl<ChatInfoMapper, ChatInfo> imple
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<ChatInfo> getMessageList() {
         Long senderId = LoginHolder.getLoginUser().getId();
         LambdaQueryWrapper<ChatInfo> queryWrapper = new LambdaQueryWrapper<>();

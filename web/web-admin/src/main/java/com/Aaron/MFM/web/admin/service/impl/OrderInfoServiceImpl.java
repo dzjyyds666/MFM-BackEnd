@@ -18,6 +18,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private OrderStatusMapper orderStatusMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<OrderInfoVo> getOrderList() {
         List<OrderInfoVo> list = new ArrayList<>();
 
@@ -88,6 +91,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public OrderInfoVo getOrderById(Integer id) {
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         OrderInfo orderInfo = orderInfoMapper.selectById(id);
@@ -118,6 +122,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void upOrderStatus(Integer id, Integer statusId) {
         LambdaUpdateWrapper<OrderInfo> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(OrderInfo::getId, id).set(OrderInfo::getStausId, statusId);
@@ -125,6 +130,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<OrderInfoVo> searchByDate(String date) {
         List<OrderInfoVo> orderList = getOrderList();
 

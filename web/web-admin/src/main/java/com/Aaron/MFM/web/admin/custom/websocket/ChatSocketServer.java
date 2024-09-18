@@ -44,7 +44,7 @@ public class ChatSocketServer {
             this.session = session1;
             chatSocketSet.add(this);
             sessionPool.put(userId, session);
-            log.info("websocket消息: 有新的连接，总数为:" + chatSocketSet.size());
+            log.info("websocket消息: 有新的连接，总数为:{}", chatSocketSet.size());
             this.rabbitTemplate = SpringContextHolder.getBean(RabbitTemplate.class);
         }catch (Exception e){
             throw new MFMException(500, "连接失败");
@@ -69,14 +69,13 @@ public class ChatSocketServer {
     @OnClose
     public void onClose( @PathParam(value = "userId") String userId) {
         chatSocketSet.remove(this);
-        log.info("websocket消息: ID:"+userId+"-连接断开，剩余连接总数为:" + chatSocketSet.size());
+        log.info("websocket消息: ID:{}-连接断开，剩余连接总数为:{}", userId, chatSocketSet.size());
     }
 
     public int sendMessage(String userId,String message) {
         Session session = sessionPool.get(userId);
         if(session != null && session.isOpen()) {
             try{
-                log.error("websocket消息: 单点消息:" + message);
                 session.getAsyncRemote().sendText(message);
                 return 1;
             }catch (Exception e){

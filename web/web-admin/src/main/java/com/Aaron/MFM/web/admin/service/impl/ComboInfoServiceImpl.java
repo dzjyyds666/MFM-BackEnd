@@ -17,6 +17,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class ComboInfoServiceImpl extends ServiceImpl<ComboInfoMapper, ComboInfo
     @Autowired
     private ComboFoodRelationMapper comboFoodRelationMapper;
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<ComboInfoVo> getComboList() {
         List<ComboInfo> comboInfoList = comboInfoMapper.selectList(null);
         List<ComboInfoVo> comboInfoVoList = new ArrayList<>();
@@ -73,6 +76,7 @@ public class ComboInfoServiceImpl extends ServiceImpl<ComboInfoMapper, ComboInfo
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void addOrUpdateCombo(AddOrUpdateComboVo comboInfoVo) {
         ComboInfo comboInfo = new ComboInfo();
         if(comboInfoVo.getId() == null){
@@ -110,6 +114,7 @@ public class ComboInfoServiceImpl extends ServiceImpl<ComboInfoMapper, ComboInfo
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<ComboInfoVo> searchByCondition(SearchComboVo searchComboVo) {
         List<ComboInfoVo> comboList = getComboList();
         List<ComboInfoVo> resultList = new ArrayList<>();

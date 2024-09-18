@@ -11,6 +11,8 @@ import com.Aaron.MFM.web.app.vo.comment.CommentVo;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class CommentInfoServiceImpl extends ServiceImpl<CommentInfoMapper, Comme
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void addComment(CommentInfovo commentInfo) {
         UserInfo loginUser = LoginHolder.getLoginUser();
 
