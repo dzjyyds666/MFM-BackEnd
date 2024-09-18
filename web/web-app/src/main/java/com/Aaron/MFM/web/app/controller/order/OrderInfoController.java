@@ -35,8 +35,8 @@ public class OrderInfoController {
     @PostMapping("/createOrder")
     @Operation(summary = "创建订单")
     public Result<String> createOrder(@RequestBody OrderVo orderInfo) {
-        orderStatusService.addOrder(orderInfo);
-        return Result.ok("添加成功");
+        String orderNumber = orderStatusService.addOrder(orderInfo);
+        return Result.ok(orderNumber);
     }
 
     @PostMapping("/updateOrder")

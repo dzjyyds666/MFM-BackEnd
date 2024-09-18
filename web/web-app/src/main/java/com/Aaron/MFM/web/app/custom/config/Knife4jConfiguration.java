@@ -81,4 +81,12 @@ public class Knife4jConfiguration {
                 .pathsToMatch("/app/chat/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi AliPayApi() {
+        return GroupedOpenApi.builder()
+                .group("app支付系统")
+                .pathsToMatch("/app/alipay/**")
+                .build();
+    }
 }

@@ -53,10 +53,11 @@ public class OrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, Order
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public void addOrder(OrderVo orderVo) {
+    public String addOrder(OrderVo orderVo) {
         UserInfo loginUser = LoginHolder.getLoginUser();
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setOrderNumber(UUID.randomUUID().toString().replaceAll("-","A").substring(0,16));
+        String orderNumber = UUID.randomUUID().toString().replaceAll("-","A").substring(0,16);
+        orderInfo.setOrderNumber(orderNumber);
         orderInfo.setTotal(orderVo.getTotal());
         orderInfo.setStausId(1);
         orderInfo.setUserId(loginUser.getId());
@@ -92,6 +93,8 @@ public class OrderStatusServiceImpl extends ServiceImpl<OrderStatusMapper, Order
                 orderInfo.getOrderNumber(),// 消息内容
                 postProcessor
                );
+
+        return orderNumber;
     }
 
     @Override

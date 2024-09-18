@@ -20,6 +20,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -55,11 +57,13 @@ public class RabbitListeners {
 
     // 监听订单消息, 将订单信息写入数据库
     @RabbitListener(queues = RabbitConfig.ORDER_QUEUE)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void orderListener(String order){
         log.info("监听到订单消息:"+order);
         String[] split = order.split(":");
         Long userId = Long.parseLong(split[0]);
         Integer salesPromotionId = Integer.parseInt(split[1]);
+        String orderNumber = split[2];
         // 获取促销信息
         SalesPromotion salesPromotion = salesPromotionMapper.selectById(salesPromotionId);
 

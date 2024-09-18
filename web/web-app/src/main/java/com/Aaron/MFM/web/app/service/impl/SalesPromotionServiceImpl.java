@@ -60,14 +60,15 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         return salesPromotionMapper.getSalePromotionList();
     }
 
+    // 抢购
     @Override
-    public void snapped(Integer id) {
+    public String snapped(Integer id) {
         // 获取用户信息
         Long userId = LoginHolder.getLoginUser().getId();
         // TODO
         String LOCAK_KEY = "salesPromotion";
         // 获取锁
-        boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(LOCAK_KEY,1, Duration.ofSeconds(1));
+        boolean lockAcquired = Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(LOCAK_KEY, 1, Duration.ofSeconds(1)));
         if(lockAcquired){
             try{
                 // 查询库存是否充足
@@ -84,10 +85,13 @@ public class SalesPromotionServiceImpl extends ServiceImpl<SalesPromotionMapper,
         }else {
             throw new MFMException(201,"系统繁忙,请重试");
         }
+        String orderNumber = UUID.randomUUID().toString().replaceAll("-","A").substring(0,16);
         // 把订单信息存入消息队列
-        String order = userId+":"+id;
+        String order = userId+":"+id+":"+orderNumber;
 
         rabbitTemplate.convertAndSend(RabbitConfig.ORDER_EXCHANGE,RabbitConfig.ORDER_ROUTING_KEY,order);
+
+        return order;
     }
 
 }

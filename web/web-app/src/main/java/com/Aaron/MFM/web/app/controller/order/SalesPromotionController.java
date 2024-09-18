@@ -39,8 +39,8 @@ public class SalesPromotionController {
     @GetMapping("/snapped")
     @Operation(summary = "抢购订单")
     public Result<String> snapped(Integer id) {
-        salesPromotionService.snapped(id);
-        return Result.ok("抢购成功,请稍后到订单页面查看");
+        String orderNumber = salesPromotionService.snapped(id);
+        return Result.ok("抢购成功,请稍后到订单页面查看,订单号:"+orderNumber);
     }
 
 }

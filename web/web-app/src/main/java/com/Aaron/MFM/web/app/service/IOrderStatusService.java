@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface IOrderStatusService extends IService<OrderStatus> {
 
-    void addOrder(OrderVo orderInfo);
+    String addOrder(OrderVo orderInfo);
 
     void updateOrder(OrderStatusVo orderStatusVo);
 

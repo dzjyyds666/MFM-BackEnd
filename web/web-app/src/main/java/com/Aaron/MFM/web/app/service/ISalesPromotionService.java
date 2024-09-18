@@ -18,5 +18,5 @@ public interface ISalesPromotionService extends IService<SalesPromotion> {
 
     List<SalesPromotionVo> getSalePromotionList();
 
-    void snapped(Integer id);
+    String snapped(Integer id);
 }
