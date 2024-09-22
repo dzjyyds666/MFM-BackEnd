@@ -3,10 +3,11 @@ package com.Aaron.MFM.web.app.controller.login;
 
 import com.Aaron.MFM.common.result.Result;
 import com.Aaron.MFM.model.entity.UserInfo;
-import com.Aaron.MFM.web.admin.service.IUserInfoService;
 import com.Aaron.MFM.web.app.aop.LimitAccess;
+import com.Aaron.MFM.web.app.service.IUserInfoService;
 import com.Aaron.MFM.web.app.vo.login.CaptchaVo;
 import com.Aaron.MFM.web.app.vo.login.LoginInfoVo;
+import com.Aaron.MFM.web.app.vo.user.createUserVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,14 @@ public class LoginController {
 
     @GetMapping("/getcaptcha")
     @Operation(summary = "获取验证码")
-    @LimitAccess(maxAccessCount = 1)
-    public Result<CaptchaVo> getCaptcha(){
-        CaptchaVo captchaVo = userInfoService.getCaptcha();
+    public Result<CaptchaVo> getCaptcha(@RequestParam String type){
+
+        CaptchaVo captchaVo = userInfoService.getCaptcha(type);
         return Result.ok(captchaVo);
     }
 
     @PostMapping
     @Operation(summary = "登录")
-    @LimitAccess()
     public Result<String> login(@RequestBody LoginInfoVo loginInfoVo){
         String token = userInfoService.login(loginInfoVo);
         return Result.ok(token);
@@ -46,8 +46,7 @@ public class LoginController {
 
     @PostMapping("/register")
     @Operation(summary = "注册")
-    @LimitAccess(maxAccessCount = 1)
-    public Result<String> register(@RequestBody UserInfo userinfo){
+    public Result<String> register(@RequestBody createUserVo userinfo){
         userInfoService.register(userinfo);
         return Result.ok("注册成功");
     }

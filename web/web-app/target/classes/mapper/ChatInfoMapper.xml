@@ -3,6 +3,6 @@
 <mapper namespace="com.Aaron.MFM.web.app.mapper.ChatInfoMapper">
 
     <delete id="deleteChatInfoExpired">
-        delete from chat_info where create_time < DATE_SUB(CURDATE(), INTERVAL 30 DAY);
+        DELETE FROM chat_info WHERE  DATE_SUB(CURDATE(), INTERVAL 30 DAY) >= create_time ;
     </delete>
 </mapper>

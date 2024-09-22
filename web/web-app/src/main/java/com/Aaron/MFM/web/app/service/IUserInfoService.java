@@ -1,9 +1,10 @@
-package com.Aaron.MFM.web.admin.service;
+package com.Aaron.MFM.web.app.service;
 
 import com.Aaron.MFM.model.entity.UserInfo;
 import com.Aaron.MFM.web.app.vo.login.CaptchaVo;
 import com.Aaron.MFM.web.app.vo.login.LoginInfoVo;
 import com.Aaron.MFM.web.app.vo.user.UserInfoVo;
+import com.Aaron.MFM.web.app.vo.user.createUserVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -16,13 +17,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserInfoService extends IService<UserInfo> {
 
-     CaptchaVo getCaptcha();
+     CaptchaVo getCaptcha(String type);
 
      String login(LoginInfoVo loginInfoVo);
 
      void logout();
 
-     void register(UserInfo userinfo);
+     void register(createUserVo userinfo);
 
     UserInfoVo getUserInfo();
 
